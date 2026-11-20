@@ -1,7 +1,5 @@
 # Worker name controls the left half of *.workers.dev.
-# Target public URL (Patrick’s account): https://hkproperty.patrick-lau.workers.dev
-# Set your workers.dev subdomain to "patrick-lau" once in the Cloudflare dashboard
-# (Workers & Pages → Account details → workers.dev subdomain) if it is not already.
+# Live URL: https://hkproperty.patricklau-wc.workers.dev
 name = "hkproperty"
 main = "src/index.ts"
 compatibility_date = "2025-11-01"

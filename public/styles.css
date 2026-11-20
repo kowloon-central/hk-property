@@ -210,10 +210,13 @@ footer {
 }
 
 .map-svg-wrap {
+  position: relative;
   min-height: 320px;
-  background: rgba(255, 255, 255, 0.55);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 245, 240, 0.55)),
+    radial-gradient(ellipse at 55% 45%, rgba(201, 231, 220, 0.55), transparent 65%);
   border-radius: 14px;
-  padding: 0.75rem;
+  padding: 0.75rem 0.75rem 1.5rem;
 }
 
 .map-svg-wrap svg {
@@ -222,19 +225,89 @@ footer {
   display: block;
 }
 
-.district {
-  cursor: default;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+.map-empty {
+  margin: 0;
+  padding: 1rem;
+  color: var(--ink-soft);
 }
 
-.district:hover {
-  opacity: 0.88;
+.map-credit {
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.35rem;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+}
+
+.district {
+  cursor: pointer;
+  outline: none;
+  transition: fill 0.2s ease, opacity 0.2s ease, stroke-width 0.15s ease;
+}
+
+.district:hover,
+.district.is-hover,
+.district:focus-visible {
+  stroke-opacity: 0.7;
+  stroke-width: 2.2;
+}
+
+.district.is-dim {
+  opacity: 0.38;
+}
+
+.district.is-active {
+  stroke-opacity: 0.85;
+  stroke-width: 2.4;
+  filter: brightness(1.05);
+}
+
+.district.is-empty {
+  cursor: help;
+}
+
+.map-tooltip {
+  position: fixed;
+  z-index: 40;
+  min-width: 9rem;
+  max-width: 16rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 28px rgba(12, 31, 36, 0.12);
+  color: var(--ink);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.map-tooltip .tip-title {
+  font-weight: 600;
+}
+
+.map-tooltip .tip-sub {
+  margin-top: 0.15rem;
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+}
+
+.map-tooltip .tip-val {
+  margin-top: 0.25rem;
+  color: var(--jade-deep);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
 }
 
 .district-list {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
+  max-height: 420px;
+  overflow: auto;
 }
 
 .district-row {
@@ -242,10 +315,23 @@ footer {
   grid-template-columns: 1fr auto auto;
   gap: 0.75rem;
   align-items: center;
+  width: 100%;
   padding: 0.65rem 0.75rem;
+  border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.55);
   border-radius: 12px;
+  color: inherit;
+  font: inherit;
   font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.district-row:hover,
+.district-row.is-active {
+  border-color: rgba(31, 122, 92, 0.35);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .district-row strong {

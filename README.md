@@ -7,17 +7,17 @@ Cloudflare Worker dashboard for official Hong Kong property stats:
 
 Bilingual UI: **English ↔ 繁體中文**.
 
-Public target URL (Patrick Lau’s Cloudflare account):
+Live URL:
 
-`https://hkproperty.patrick-lau.workers.dev`
+`https://hkproperty.patricklau-wc.workers.dev`
 
-(Worker name is `hkproperty`. The `patrick-lau` segment is your account’s workers.dev subdomain.)
+(Worker name is `hkproperty`. Account workers.dev subdomain is `patricklau-wc`.)
 
 ## Stack
 
 - Cloudflare Workers + static assets (`public/`)
 - TypeScript fetchers for RVD CSV + Land Registry JSON
-- Chart.js charts, SVG district heat map
+- Chart.js charts + geographic Hong Kong district choropleth (SimpleMaps admin1 SVG paths, CC-BY-4.0), colored by Land Registry ASP region keys
 
 ## Prerequisites
 
@@ -38,8 +38,7 @@ npx wrangler deploy
 First-time workers.dev branding:
 
 1. Cloudflare dashboard → **Workers & Pages**
-2. Confirm account workers.dev subdomain is **`patrick-lau`**  
-   (Workers & Pages → account settings / subdomain). If it is something else, either rename it to `patrick-lau` (if available) or accept `hkproperty.<your-subdomain>.workers.dev`.
+2. Confirm account workers.dev subdomain (currently **`patricklau-wc`**).
 3. Deploy creates Worker **`hkproperty`** → `https://hkproperty.<subdomain>.workers.dev`
 
 Local preview:

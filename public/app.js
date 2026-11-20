@@ -25,7 +25,7 @@
       colRentB: "Rent B",
       colRentC: "Rent C",
       footerSources:
-        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk) and Land Registry monthly ASP statistics. Figures may be provisional.",
+        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk) and Land Registry monthly ASP statistics. Figures may be provisional. Map outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0).",
       footerHost: "Cloudflare Worker",
       provisional: "provisional",
       asOf: (d, ym) =>
@@ -34,6 +34,8 @@
           : `Indices as of ${d}`,
       deals: "deals",
       hkM: "HK$ m",
+      noAsp: "No ASP breakdown",
+      aspRegion: "ASP region",
       regions: {
         "Hong Kong": "Hong Kong Island",
         Kowloon: "Kowloon",
@@ -64,13 +66,15 @@
       colRentB: "租金 B",
       colRentC: "租金 C",
       footerSources:
-        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）及土地註冊處每月買賣合約統計。最新數字或屬臨時數字。",
+        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）及土地註冊處每月買賣合約統計。最新數字或屬臨時數字。地圖界線：SimpleMaps 香港行政區（CC-BY-4.0）。",
       footerHost: "Cloudflare Worker",
       provisional: "臨時",
       asOf: (d, ym) =>
         ym ? `指數截至 ${d} · 買賣合約月份 ${ym}` : `指數截至 ${d}`,
       deals: "宗",
       hkM: "百萬港元",
+      noAsp: "暫無買賣合約分項",
+      aspRegion: "買賣合約分區",
       regions: {
         "Hong Kong": "香港島",
         Kowloon: "九龍",
@@ -79,10 +83,56 @@
     },
   };
 
+  /** 18 DC names (SimpleMaps) → Land Registry ASP region ids used by /api/market */
+  const DC_TO_ASP = {
+    "Central and Western": "hong-kong",
+    "Wan Chai": "hong-kong",
+    Eastern: "hong-kong",
+    Southern: "hong-kong",
+    "Yau Tsim Mong": "kowloon",
+    "Sham Shui Po": "kowloon",
+    "Kowloon City": "kowloon",
+    "Wong Tai Sin": "kowloon",
+    "Kwun Tong": "kowloon",
+    Islands: "islands",
+    North: "north",
+    "Sai Kung": "sai-kung",
+    "Sha Tin": "sha-tin",
+    "Tai Po": "tai-po",
+    "Tsuen Wan": "tsuen-wan",
+    "Tuen Mun": "tuen-mun",
+    "Yuen Long": "yuen-long",
+    // Land Registry ASP JSON has no Kwai Tsing row
+    "Kwai Tsing": null,
+  };
+
+  const DC_LABELS = {
+    "Central and Western": { en: "Central & Western", zh: "中西區" },
+    "Wan Chai": { en: "Wan Chai", zh: "灣仔" },
+    Eastern: { en: "Eastern", zh: "東區" },
+    Southern: { en: "Southern", zh: "南區" },
+    "Yau Tsim Mong": { en: "Yau Tsim Mong", zh: "油尖旺" },
+    "Sham Shui Po": { en: "Sham Shui Po", zh: "深水埗" },
+    "Kowloon City": { en: "Kowloon City", zh: "九龍城" },
+    "Wong Tai Sin": { en: "Wong Tai Sin", zh: "黃大仙" },
+    "Kwun Tong": { en: "Kwun Tong", zh: "觀塘" },
+    "Kwai Tsing": { en: "Kwai Tsing", zh: "葵青" },
+    "Tsuen Wan": { en: "Tsuen Wan", zh: "荃灣" },
+    "Tuen Mun": { en: "Tuen Mun", zh: "屯門" },
+    "Yuen Long": { en: "Yuen Long", zh: "元朗" },
+    North: { en: "North", zh: "北區" },
+    "Tai Po": { en: "Tai Po", zh: "大埔" },
+    "Sha Tin": { en: "Sha Tin", zh: "沙田" },
+    "Sai Kung": { en: "Sai Kung", zh: "西貢" },
+    Islands: { en: "Islands", zh: "離島" },
+  };
+
   let locale = localStorage.getItem("hkp-lang") === "zh" ? "zh" : "en";
   let market = null;
   let priceChart = null;
   let rentChart = null;
+  let mapData = null;
+  let selectedAspId = null;
 
   const $ = (sel) => document.querySelector(sel);
 
@@ -227,65 +277,71 @@
     });
   }
 
-  const MAP_SHAPES = [
-    {
-      id: "hong-kong",
-      d: "M210 250 C230 235 270 230 295 245 C320 260 330 290 310 310 C285 335 240 340 215 320 C190 300 190 270 210 250 Z",
-    },
-    {
-      id: "kowloon",
-      d: "M200 175 C230 160 275 158 305 175 C325 190 320 220 295 230 C260 245 220 245 195 225 C175 208 180 188 200 175 Z",
-    },
-    {
-      id: "islands",
-      d: "M95 275 C120 260 150 265 160 285 C168 305 145 325 115 320 C90 315 80 290 95 275 Z",
-    },
-    {
-      id: "tsuen-wan",
-      d: "M145 155 C170 145 195 148 205 165 C210 180 195 195 170 198 C145 200 130 180 145 155 Z",
-    },
-    {
-      id: "sha-tin",
-      d: "M250 120 C280 110 310 118 320 140 C325 158 305 175 275 175 C245 175 230 150 250 120 Z",
-    },
-    {
-      id: "sai-kung",
-      d: "M330 130 C365 115 400 130 410 160 C415 185 390 205 355 200 C325 195 310 160 330 130 Z",
-    },
-    {
-      id: "tai-po",
-      d: "M255 70 C290 55 330 65 340 95 C345 115 320 130 285 125 C255 120 240 95 255 70 Z",
-    },
-    {
-      id: "north",
-      d: "M230 25 C275 10 330 20 345 50 C350 70 320 85 275 80 C235 75 210 50 230 25 Z",
-    },
-    {
-      id: "yuen-long",
-      d: "M95 70 C140 55 185 65 195 95 C200 115 170 135 130 130 C95 125 75 100 95 70 Z",
-    },
-    {
-      id: "tuen-mun",
-      d: "M70 130 C105 115 135 125 145 150 C150 170 125 190 95 185 C70 180 55 155 70 130 Z",
-    },
-  ];
-
   function heatColor(value, max) {
     if (!max) return "#cfe0d8";
-    const t = Math.max(0, Math.min(1, value / max));
-    // jade scale
-    const r = Math.round(207 - t * 140);
-    const g = Math.round(224 - t * 70);
-    const b = Math.round(216 - t * 100);
+    const ratio = Math.max(0, Math.min(1, value / max));
+    // jade → deep teal (no purple)
+    const r = Math.round(207 - ratio * 155);
+    const g = Math.round(224 - ratio * 70);
+    const b = Math.round(216 - ratio * 115);
     return `rgb(${r},${g},${b})`;
+  }
+
+  function dcLabel(name) {
+    const meta = DC_LABELS[name];
+    if (!meta) return name;
+    return locale === "zh" ? meta.zh : meta.en;
+  }
+
+  function ensureTooltip() {
+    let tip = $("#map-tooltip");
+    if (tip) return tip;
+    tip = document.createElement("div");
+    tip.id = "map-tooltip";
+    tip.className = "map-tooltip";
+    tip.hidden = true;
+    document.body.appendChild(tip);
+    return tip;
+  }
+
+  function setMapHighlight(aspId) {
+    selectedAspId = aspId;
+    document.querySelectorAll(".district").forEach((el) => {
+      const match = aspId && el.getAttribute("data-asp") === aspId;
+      el.classList.toggle("is-active", Boolean(match));
+      el.classList.toggle("is-dim", Boolean(aspId) && !match);
+    });
+    document.querySelectorAll(".district-row").forEach((el) => {
+      el.classList.toggle("is-active", aspId && el.getAttribute("data-id") === aspId);
+    });
+  }
+
+  function showTooltip(evt, html) {
+    const tip = ensureTooltip();
+    tip.innerHTML = html;
+    tip.hidden = false;
+    const pad = 14;
+    const x = Math.min(window.innerWidth - tip.offsetWidth - pad, evt.clientX + 12);
+    const y = Math.min(window.innerHeight - tip.offsetHeight - pad, evt.clientY + 12);
+    tip.style.left = `${Math.max(pad, x)}px`;
+    tip.style.top = `${Math.max(pad, y)}px`;
+  }
+
+  function hideTooltip() {
+    const tip = $("#map-tooltip");
+    if (tip) tip.hidden = true;
   }
 
   function renderMap(asp) {
     const wrap = $("#district-map");
     const list = $("#district-list");
-    if (!wrap || !list || !asp) {
-      if (wrap) wrap.innerHTML = `<p style="padding:1rem;color:#243a40">${locale === "zh" ? "暫無買賣合約資料" : "No ASP data yet"}</p>`;
-      if (list) list.innerHTML = "";
+    if (!wrap || !list) return;
+
+    if (!asp || !mapData) {
+      wrap.innerHTML = `<p class="map-empty">${
+        locale === "zh" ? "暫無買賣合約資料" : "No ASP data yet"
+      }</p>`;
+      list.innerHTML = "";
       return;
     }
 
@@ -293,17 +349,26 @@
     const byId = Object.fromEntries(asp.districts.map((d) => [d.id, d]));
 
     wrap.innerHTML = `
-      <svg viewBox="0 0 480 360" role="presentation">
-        <rect x="0" y="0" width="480" height="360" fill="transparent" />
-        ${MAP_SHAPES.map((s) => {
-          const d = byId[s.id];
-          const fill = heatColor(d?.transactions ?? 0, max);
-          const label = d ? (locale === "zh" ? d.zh : d.en) : s.id;
-          return `<path class="district" data-id="${s.id}" d="${s.d}" fill="${fill}" stroke="#0c1f24" stroke-opacity="0.25" stroke-width="1.5">
-            <title>${label}: ${fmtInt(d?.transactions ?? 0)}</title>
-          </path>`;
-        }).join("")}
-      </svg>`;
+      <svg viewBox="${mapData.viewBox}" role="img" aria-label="${
+        locale === "zh" ? "香港分區地圖" : "Hong Kong district map"
+      }">
+        <rect x="0" y="0" width="1000" height="733" fill="transparent"></rect>
+        ${mapData.paths
+          .map((p) => {
+            const aspId = DC_TO_ASP[p.name];
+            const d = aspId ? byId[aspId] : null;
+            const fill = d ? heatColor(d.transactions, max) : "#e4ebe6";
+            const active =
+              selectedAspId && aspId === selectedAspId ? " is-active" : "";
+            const dim =
+              selectedAspId && aspId !== selectedAspId ? " is-dim" : "";
+            return `<path class="district${active}${dim}${
+              aspId ? "" : " is-empty"
+            }" data-dc="${p.name}" data-asp="${aspId || ""}" d="${p.d}" fill="${fill}" stroke="#0c1f24" stroke-opacity="0.28" stroke-width="1.2" tabindex="0"></path>`;
+          })
+          .join("")}
+      </svg>
+      <p class="map-credit">SimpleMaps · CC-BY-4.0</p>`;
 
     const sorted = [...asp.districts].sort(
       (a, b) => b.transactions - a.transactions,
@@ -315,13 +380,94 @@
           d.considerationM != null
             ? `${fmtInt(d.considerationM)} ${t("hkM")}`
             : "—";
-        return `<div class="district-row" data-id="${d.id}">
+        const active = selectedAspId === d.id ? " is-active" : "";
+        return `<button type="button" class="district-row${active}" data-id="${d.id}">
           <strong>${name}</strong>
           <span class="count">${fmtInt(d.transactions)} ${t("deals")}</span>
           <span class="hkd">${money}</span>
-        </div>`;
+        </button>`;
       })
       .join("");
+
+    const svg = wrap.querySelector("svg");
+    svg?.addEventListener("pointerleave", () => {
+      hideTooltip();
+    });
+
+    wrap.querySelectorAll(".district").forEach((path) => {
+      const onEnter = (evt) => {
+        const dc = path.getAttribute("data-dc");
+        const aspId = path.getAttribute("data-asp");
+        const row = aspId ? byId[aspId] : null;
+        const title = dcLabel(dc);
+        let body;
+        if (!row) {
+          body = `<div class="tip-sub">${t("noAsp")}</div>`;
+        } else {
+          const regionName = locale === "zh" ? row.zh : row.en;
+          const regionLine =
+            aspId === "hong-kong" || aspId === "kowloon"
+              ? `<div class="tip-sub">${t("aspRegion")}: ${regionName}</div>`
+              : "";
+          const money =
+            row.considerationM != null
+              ? ` · ${fmtInt(row.considerationM)} ${t("hkM")}`
+              : "";
+          body = `${regionLine}<div class="tip-val">${fmtInt(row.transactions)} ${t(
+            "deals",
+          )}${money}</div>`;
+        }
+        showTooltip(evt, `<div class="tip-title">${title}</div>${body}`);
+        if (aspId) {
+          document.querySelectorAll(".district").forEach((el) => {
+            const match = el.getAttribute("data-asp") === aspId;
+            el.classList.toggle("is-hover", match);
+          });
+        }
+      };
+
+      path.addEventListener("pointerenter", onEnter);
+      path.addEventListener("pointermove", (evt) => {
+        if (!$("#map-tooltip")?.hidden) onEnter(evt);
+      });
+      path.addEventListener("pointerleave", () => {
+        document
+          .querySelectorAll(".district.is-hover")
+          .forEach((el) => el.classList.remove("is-hover"));
+      });
+      path.addEventListener("click", () => {
+        const aspId = path.getAttribute("data-asp");
+        if (!aspId) return;
+        setMapHighlight(selectedAspId === aspId ? null : aspId);
+      });
+      path.addEventListener("keydown", (evt) => {
+        if (evt.key === "Enter" || evt.key === " ") {
+          evt.preventDefault();
+          path.click();
+        }
+      });
+    });
+
+    list.querySelectorAll(".district-row").forEach((row) => {
+      row.addEventListener("click", () => {
+        const id = row.getAttribute("data-id");
+        setMapHighlight(selectedAspId === id ? null : id);
+        const tipDistrict = mapData.paths.find(
+          (p) => DC_TO_ASP[p.name] === id,
+        );
+        if (tipDistrict) {
+          const d = byId[id];
+          const title = locale === "zh" ? d.zh : d.en;
+          showTooltip(
+            { clientX: row.getBoundingClientRect().left, clientY: row.getBoundingClientRect().top },
+            `<div class="tip-title">${title}</div><div class="tip-val">${fmtInt(
+              d.transactions,
+            )} ${t("deals")}</div>`,
+          );
+          setTimeout(hideTooltip, 1600);
+        }
+      });
+    });
   }
 
   function renderRegions(data) {
@@ -388,9 +534,20 @@
     renderRegions(data);
   }
 
+  async function loadMapData() {
+    if (mapData) return mapData;
+    const res = await fetch("/hk-districts-paths.json");
+    if (!res.ok) throw new Error(`Map HTTP ${res.status}`);
+    mapData = await res.json();
+    return mapData;
+  }
+
   async function load() {
     try {
-      const res = await fetch("/api/market");
+      const [_, res] = await Promise.all([
+        loadMapData(),
+        fetch("/api/market"),
+      ]);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       market = await res.json();
       if (market.error) throw new Error(market.error);
