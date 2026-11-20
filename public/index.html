@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HK Property · Patrick Lau</title>
+    <meta
+      name="description"
+      content="Hong Kong official property sold prices, rents, indices, and Land Registry ASP counts."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Sora:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+
+    <header class="top">
+      <div class="brand-block">
+        <p class="brand" data-i18n="brand">HK Property</p>
+        <p class="byline" data-i18n="byline">by Patrick Lau</p>
+      </div>
+      <div class="top-actions">
+        <button
+          type="button"
+          id="lang-toggle"
+          class="lang-toggle"
+          aria-label="Switch language"
+        >
+          繁體
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1 data-i18n="heroTitle">Official sold prices, rents &amp; deals</h1>
+        <p class="lede" data-i18n="heroLede">
+          Monthly RVD indices and Land Registry ASP counts for Hong Kong —
+          bilingual district dashboard.
+        </p>
+        <p class="meta" id="as-of" data-i18n-keep></p>
+      </section>
+
+      <section class="kpis" aria-label="Key figures">
+        <article class="kpi">
+          <h2 data-i18n="kpiPrice">Price index</h2>
+          <p class="kpi-value" id="kpi-price">—</p>
+          <p class="kpi-sub" id="kpi-price-sub"></p>
+        </article>
+        <article class="kpi">
+          <h2 data-i18n="kpiRent">Rent index</h2>
+          <p class="kpi-value" id="kpi-rent">—</p>
+          <p class="kpi-sub" id="kpi-rent-sub"></p>
+        </article>
+        <article class="kpi">
+          <h2 data-i18n="kpiAsp">ASP residential</h2>
+          <p class="kpi-value" id="kpi-asp">—</p>
+          <p class="kpi-sub" id="kpi-asp-sub"></p>
+        </article>
+        <article class="kpi">
+          <h2 data-i18n="kpiPrimary">Primary vs secondary</h2>
+          <p class="kpi-value" id="kpi-split">—</p>
+          <p class="kpi-sub" id="kpi-split-sub"></p>
+        </article>
+      </section>
+
+      <section class="panel charts" aria-label="Index charts">
+        <div class="panel-head">
+          <h2 data-i18n="chartsTitle">Private domestic indices</h2>
+          <p data-i18n="chartsLede">Territory-wide RVD monthly series (latest 60 months).</p>
+        </div>
+        <div class="chart-grid">
+          <div class="chart-wrap">
+            <canvas id="price-chart" height="220"></canvas>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="rent-chart" height="220"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel map-panel" aria-label="District ASP">
+        <div class="panel-head">
+          <h2 data-i18n="mapTitle">ASP by district</h2>
+          <p data-i18n="mapLede">
+            Land Registry agreements for sale and purchase of building units.
+          </p>
+        </div>
+        <div class="map-layout">
+          <div class="map-svg-wrap" id="district-map" role="img" aria-label="Hong Kong districts"></div>
+          <div class="district-list" id="district-list"></div>
+        </div>
+      </section>
+
+      <section class="panel regions" aria-label="Regional averages">
+        <div class="panel-head">
+          <h2 data-i18n="regionTitle">Average prices &amp; rents by region</h2>
+          <p data-i18n="regionLede">
+            Latest monthly RVD averages for Class A–C private domestic (HK$/m²).
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table id="region-table">
+            <thead>
+              <tr>
+                <th data-i18n="colRegion">Region</th>
+                <th data-i18n="colPriceA">Price A</th>
+                <th data-i18n="colPriceB">Price B</th>
+                <th data-i18n="colPriceC">Price C</th>
+                <th data-i18n="colRentA">Rent A</th>
+                <th data-i18n="colRentB">Rent B</th>
+                <th data-i18n="colRentC">Rent C</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p data-i18n="footerSources">
+        Sources: Rating &amp; Valuation Department (data.gov.hk / rvd.gov.hk) and
+        Land Registry monthly ASP statistics. Figures may be provisional.
+      </p>
+      <p class="footer-meta">
+        <span data-i18n="footerHost">Cloudflare Worker</span>
+        ·
+        <a href="https://github.com/kowloon-central/hk-property">kowloon-central/hk-property</a>
+      </p>
+    </footer>
+  </body>
+</html>
