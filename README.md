@@ -2,10 +2,11 @@
 
 Cloudflare Worker dashboard for official Hong Kong property stats:
 
-- **RVD** monthly private-domestic price & rent indices, plus average prices/rents by region
-- **Land Registry** monthly ASP (agreement for sale and purchase) counts by district
+- **RVD** monthly private-domestic price & rent indices, plus average prices/rents by region (with history)
+- **Land Registry** monthly ASP counts by published district / region
+- **District drill-down**: CSDI LandsD building footprints + bilingual names, storeys, heights
 
-Bilingual UI: **English ↔ 繁體中文**.
+Bilingual UI: default **繁體中文**, toggle **English ↔ 繁體**. Preference persisted in `localStorage` (`hkp-lang`).
 
 Live URL:
 
@@ -16,14 +17,8 @@ Live URL:
 ## Stack
 
 - Cloudflare Workers + static assets (`public/`)
-- TypeScript fetchers for RVD CSV + Land Registry JSON
-- Chart.js charts + geographic Hong Kong district choropleth (SimpleMaps admin1 SVG paths, CC-BY-4.0), colored by Land Registry ASP region keys
-
-## Prerequisites
-
-1. Node.js 20+
-2. Cloudflare account (Patrick’s)
-3. [Wrangler](https://developers.cloudflare.com/workers/wrangler/) — installed via `npm install` below
+- TypeScript fetchers for RVD CSV + Land Registry JSON + CSDI ArcGIS building query
+- Chart.js charts + SimpleMaps district choropleth (overview) + Leaflet building map (drill-down)
 
 ## Setup & deploy
 
@@ -31,15 +26,9 @@ Live URL:
 git clone https://github.com/kowloon-central/hk-property.git
 cd hk-property
 npm install
-npx wrangler login          # opens browser; log in as Patrick
+npx wrangler login
 npx wrangler deploy
 ```
-
-First-time workers.dev branding:
-
-1. Cloudflare dashboard → **Workers & Pages**
-2. Confirm account workers.dev subdomain (currently **`patricklau-wc`**).
-3. Deploy creates Worker **`hkproperty`** → `https://hkproperty.<subdomain>.workers.dev`
 
 Local preview:
 
@@ -47,30 +36,48 @@ Local preview:
 npm run dev
 ```
 
-Then open the printed `localhost` URL. `/api/market` proxies live RVD / Land Registry data (cached ~1 hour).
-
 ## API
 
 | Path | Description |
 |------|-------------|
 | `GET /api/health` | Liveness |
-| `GET /api/market` | Latest indices (60 months), regional averages, ASP districts |
+| `GET /api/market` | Indices, regional series, ASP, data notes |
+| `GET /api/asp-history?id=sha-tin&months=18` | Monthly ASP history for a Land Registry region id |
+| `GET /api/buildings?bbox=minLon,minLat,maxLon,maxLat&limit=700` | CSDI building footprints (named preferred) |
 
-## Data sources (MVP)
+## What is live vs placeholder
+
+### Live (official / open)
+
+| Layer | Source |
+|-------|--------|
+| Territory price & rent indices | RVD `1.4M.csv` / `1.3M.csv` |
+| Regional Class A–C avg price & rent history | RVD `1.2M.csv` / `1.1M.csv` |
+| Popular-developments Urban / NT indices | RVD `1.5M.csv` (bundled in market payload) |
+| ASP counts & consideration | Land Registry monthly JSON |
+| Overview 18-district outlines | SimpleMaps HK admin1 SVG (CC-BY-4.0) |
+| Drill-down district polygons | Derived from [hupili/geohk](https://github.com/hupili/geohk) DC land GeoJSON (census-era DC boundaries; approximate match to today’s 18 districts) |
+| Building footprints + names / storeys / heights | Lands Department **Building** layer via [CSDI](https://portal.csdi.gov.hk/) / data.gov.hk |
+
+### Placeholder (intentionally not scraped)
+
+| Layer | Status |
+|-------|--------|
+| Per-building **rent listing** | UI shows “not wired yet” — no Midland / Centaline / 28Hse scrape |
+| Per-building **asking price** | Same |
+| Exact 18-way ASP for Island / Kowloon DCs | Land Registry publishes Island & Kowloon aggregates only; Island/Kowloon DCs share that ASP series |
+
+## Data sources (URLs)
 
 | Series | URL |
 |--------|-----|
-| Price indices (monthly) | https://www.rvd.gov.hk/datagovhk/1.4M.csv |
-| Rent indices (monthly) | https://www.rvd.gov.hk/datagovhk/1.3M.csv |
+| Price indices | https://www.rvd.gov.hk/datagovhk/1.4M.csv |
+| Rent indices | https://www.rvd.gov.hk/datagovhk/1.3M.csv |
 | Average prices by class | https://www.rvd.gov.hk/datagovhk/1.2M.csv |
 | Average rents by class | https://www.rvd.gov.hk/datagovhk/1.1M.csv |
+| Popular developments indices | https://www.rvd.gov.hk/datagovhk/1.5M.csv |
 | Land Registry ASP JSON | https://www.landreg.gov.hk/datagovhk/YYYYMM_data.json |
-
-Catalogued on [data.gov.hk](https://data.gov.hk/) (RVD Property Market Statistics + Land Registry monthly instruments).
-
-## Out of scope (v1)
-
-Commercial listing scrapers (Centaline, Midland, 28Hse, etc.), Housing Authority / HKHS feeds, CSDI map layers.
+| CSDI buildings (ArcGIS query) | `landsd_rcd_1637211194312_35158` MapServer/0 |
 
 ## Repo
 

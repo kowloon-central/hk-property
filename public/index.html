@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HK Property · Patrick Lau</title>
+    <title>香港樓市 · Patrick Lau</title>
     <meta
       name="description"
-      content="Hong Kong official property sold prices, rents, indices, and Land Registry ASP counts."
+      content="香港官方物業成交價、租金指數、土地註冊處買賣合約與分區樓宇地圖。"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,7 +14,19 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Sora:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
     <link rel="stylesheet" href="/styles.css" />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+      defer
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js" defer></script>
     <script src="/app.js" defer></script>
   </head>
@@ -23,8 +35,8 @@
 
     <header class="top">
       <div class="brand-block">
-        <p class="brand" data-i18n="brand">HK Property</p>
-        <p class="byline" data-i18n="byline">by Patrick Lau</p>
+        <p class="brand" data-i18n="brand">香港樓市</p>
+        <p class="byline" data-i18n="byline">Patrick Lau</p>
       </div>
       <div class="top-actions">
         <button
@@ -33,39 +45,38 @@
           class="lang-toggle"
           aria-label="Switch language"
         >
-          繁體
+          EN
         </button>
       </div>
     </header>
 
-    <main>
+    <main id="overview">
       <section class="hero">
-        <h1 data-i18n="heroTitle">Official sold prices, rents &amp; deals</h1>
+        <h1 data-i18n="heroTitle">官方成交價、租金與買賣合約</h1>
         <p class="lede" data-i18n="heroLede">
-          Monthly RVD indices and Land Registry ASP counts for Hong Kong —
-          bilingual district dashboard.
+          差餉物業估價署按月指數與土地註冊處買賣合約宗數 — 中英對照地區儀表板。點選分區可深入樓宇地圖與歷史數列。
         </p>
         <p class="meta" id="as-of" data-i18n-keep></p>
       </section>
 
       <section class="kpis" aria-label="Key figures">
         <article class="kpi">
-          <h2 data-i18n="kpiPrice">Price index</h2>
+          <h2 data-i18n="kpiPrice">售價指數</h2>
           <p class="kpi-value" id="kpi-price">—</p>
           <p class="kpi-sub" id="kpi-price-sub"></p>
         </article>
         <article class="kpi">
-          <h2 data-i18n="kpiRent">Rent index</h2>
+          <h2 data-i18n="kpiRent">租金指數</h2>
           <p class="kpi-value" id="kpi-rent">—</p>
           <p class="kpi-sub" id="kpi-rent-sub"></p>
         </article>
         <article class="kpi">
-          <h2 data-i18n="kpiAsp">ASP residential</h2>
+          <h2 data-i18n="kpiAsp">住宅買賣合約</h2>
           <p class="kpi-value" id="kpi-asp">—</p>
           <p class="kpi-sub" id="kpi-asp-sub"></p>
         </article>
         <article class="kpi">
-          <h2 data-i18n="kpiPrimary">Primary vs secondary</h2>
+          <h2 data-i18n="kpiPrimary">一手 / 二手</h2>
           <p class="kpi-value" id="kpi-split">—</p>
           <p class="kpi-sub" id="kpi-split-sub"></p>
         </article>
@@ -73,8 +84,8 @@
 
       <section class="panel charts" aria-label="Index charts">
         <div class="panel-head">
-          <h2 data-i18n="chartsTitle">Private domestic indices</h2>
-          <p data-i18n="chartsLede">Territory-wide RVD monthly series (latest 60 months).</p>
+          <h2 data-i18n="chartsTitle">私人住宅指數</h2>
+          <p data-i18n="chartsLede">全港差估署按月數列（最近 60 個月）。</p>
         </div>
         <div class="chart-grid">
           <div class="chart-wrap">
@@ -88,35 +99,40 @@
 
       <section class="panel map-panel" aria-label="District ASP">
         <div class="panel-head">
-          <h2 data-i18n="mapTitle">ASP by district</h2>
+          <h2 data-i18n="mapTitle">分區買賣合約</h2>
           <p data-i18n="mapLede">
-            Land Registry agreements for sale and purchase of building units.
+            土地註冊處樓宇單位買賣合約宗數。點選分區開啟樓宇地圖與歷史。
           </p>
         </div>
         <div class="map-layout">
-          <div class="map-svg-wrap" id="district-map" role="img" aria-label="Hong Kong districts"></div>
+          <div
+            class="map-svg-wrap"
+            id="district-map"
+            role="img"
+            aria-label="Hong Kong districts"
+          ></div>
           <div class="district-list" id="district-list"></div>
         </div>
       </section>
 
       <section class="panel regions" aria-label="Regional averages">
         <div class="panel-head">
-          <h2 data-i18n="regionTitle">Average prices &amp; rents by region</h2>
+          <h2 data-i18n="regionTitle">分區平均售價與租金</h2>
           <p data-i18n="regionLede">
-            Latest monthly RVD averages for Class A–C private domestic (HK$/m²).
+            差估署最新按月 A–C 類私人住宅平均數（港元／平方米）。
           </p>
         </div>
         <div class="table-wrap">
           <table id="region-table">
             <thead>
               <tr>
-                <th data-i18n="colRegion">Region</th>
-                <th data-i18n="colPriceA">Price A</th>
-                <th data-i18n="colPriceB">Price B</th>
-                <th data-i18n="colPriceC">Price C</th>
-                <th data-i18n="colRentA">Rent A</th>
-                <th data-i18n="colRentB">Rent B</th>
-                <th data-i18n="colRentC">Rent C</th>
+                <th data-i18n="colRegion">地區</th>
+                <th data-i18n="colPriceA">售價 A</th>
+                <th data-i18n="colPriceB">售價 B</th>
+                <th data-i18n="colPriceC">售價 C</th>
+                <th data-i18n="colRentA">租金 A</th>
+                <th data-i18n="colRentB">租金 B</th>
+                <th data-i18n="colRentC">租金 C</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -125,15 +141,98 @@
       </section>
     </main>
 
+    <section
+      id="district-detail"
+      class="district-detail"
+      hidden
+      aria-live="polite"
+    >
+      <div class="detail-bar">
+        <button type="button" id="detail-back" class="detail-back">
+          ← <span data-i18n="backOverview">返回總覽</span>
+        </button>
+        <div class="detail-titles">
+          <h1 id="detail-title">—</h1>
+          <p id="detail-sub" class="detail-sub"></p>
+        </div>
+      </div>
+
+      <div class="panel detail-notes">
+        <p id="detail-data-notes"></p>
+      </div>
+
+      <div class="panel detail-charts">
+        <div class="panel-head">
+          <h2 data-i18n="detailHistoryTitle">地區歷史</h2>
+          <p data-i18n="detailHistoryLede">
+            差估署所屬大區平均售價／租金數列，以及土地註冊處該買賣合約分區宗數。
+          </p>
+        </div>
+        <div class="chart-grid chart-grid-3">
+          <div class="chart-wrap">
+            <canvas id="detail-price-chart" height="200"></canvas>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="detail-rent-chart" height="200"></canvas>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="detail-asp-chart" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel detail-map-panel">
+        <div class="panel-head">
+          <h2 data-i18n="detailMapTitle">樓宇地圖</h2>
+          <p data-i18n="detailMapLede">
+            CSDI 地政總署建築物範圍；點選樓宇查看名稱與租金／叫價狀態。
+          </p>
+        </div>
+        <div class="detail-map-layout">
+          <div id="district-leaflet" class="district-leaflet"></div>
+          <aside id="building-panel" class="building-panel">
+            <h3 data-i18n="buildingPick">選擇樓宇</h3>
+            <p id="building-name" class="building-name">—</p>
+            <dl class="building-attrs">
+              <div>
+                <dt data-i18n="attrStoreys">層數</dt>
+                <dd id="building-storeys">—</dd>
+              </div>
+              <div>
+                <dt data-i18n="attrType">類型</dt>
+                <dd id="building-type">—</dd>
+              </div>
+              <div>
+                <dt data-i18n="attrHeight">高度（米）</dt>
+                <dd id="building-height">—</dd>
+              </div>
+              <div>
+                <dt data-i18n="attrRent">租金盤源</dt>
+                <dd id="building-rent" class="is-placeholder">—</dd>
+              </div>
+              <div>
+                <dt data-i18n="attrAsking">叫價盤源</dt>
+                <dd id="building-asking" class="is-placeholder">—</dd>
+              </div>
+            </dl>
+            <p id="building-status" class="building-status"></p>
+          </aside>
+        </div>
+        <p id="buildings-meta" class="buildings-meta"></p>
+      </div>
+    </section>
+
     <footer>
       <p data-i18n="footerSources">
-        Sources: Rating &amp; Valuation Department (data.gov.hk / rvd.gov.hk) and
-        Land Registry monthly ASP statistics. Figures may be provisional.
+        資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計，以及地政總署 CSDI
+        建築物範圍。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。
       </p>
       <p class="footer-meta">
         <span data-i18n="footerHost">Cloudflare Worker</span>
         ·
-        <a href="https://github.com/kowloon-central/hk-property">kowloon-central/hk-property</a>
+        <a href="https://github.com/kowloon-central/hk-property"
+          >kowloon-central/hk-property</a
+        >
       </p>
     </footer>
   </body>

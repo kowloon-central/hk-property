@@ -1,0 +1,221 @@
+{
+  "source": "Derived from hupili/geohk census2001/dc_land.lowres.geo.json (Hong Kong District Council land polygons)",
+  "districts": {
+    "Central and Western": {
+      "name": "Central and Western",
+      "en": "Central & Western",
+      "zh": "中西",
+      "zhFull": "中西區",
+      "bbox": [
+        114.109,
+        22.25,
+        114.17,
+        22.293
+      ]
+    },
+    "Eastern": {
+      "name": "Eastern",
+      "en": "Eastern",
+      "zh": "東",
+      "zhFull": "東區",
+      "bbox": [
+        114.179,
+        22.245,
+        114.259,
+        22.297
+      ]
+    },
+    "Southern": {
+      "name": "Southern",
+      "en": "Southern",
+      "zh": "南",
+      "zhFull": "南區",
+      "bbox": [
+        114.116,
+        22.192,
+        114.263,
+        22.278
+      ]
+    },
+    "Sham Shui Po": {
+      "name": "Sham Shui Po",
+      "en": "Sham Shui Po",
+      "zh": "深水埗",
+      "zhFull": "深水埗區",
+      "bbox": [
+        114.128,
+        22.312,
+        114.179,
+        22.351
+      ]
+    },
+    "Kowloon City": {
+      "name": "Kowloon City",
+      "en": "Kowloon City",
+      "zh": "九龍城",
+      "zhFull": "九龍城區",
+      "bbox": [
+        114.171,
+        22.298,
+        114.219,
+        22.351
+      ]
+    },
+    "Wong Tai Sin": {
+      "name": "Wong Tai Sin",
+      "en": "Wong Tai Sin",
+      "zh": "黃大仙",
+      "zhFull": "黃大仙區",
+      "bbox": [
+        114.177,
+        22.328,
+        114.226,
+        22.36
+      ]
+    },
+    "Kwun Tong": {
+      "name": "Kwun Tong",
+      "en": "Kwun Tong",
+      "zh": "觀塘",
+      "zhFull": "觀塘區",
+      "bbox": [
+        114.2,
+        22.284,
+        114.248,
+        22.337
+      ]
+    },
+    "Yau Tsim Mong": {
+      "name": "Yau Tsim Mong",
+      "en": "Yau Tsim Mong",
+      "zh": "油尖旺",
+      "zhFull": "油尖旺區",
+      "bbox": [
+        114.15,
+        22.291,
+        114.189,
+        22.329
+      ]
+    },
+    "Kwai Tsing": {
+      "name": "Kwai Tsing",
+      "en": "Kwai Tsing",
+      "zh": "葵青",
+      "zhFull": "葵青區",
+      "bbox": [
+        114.07,
+        22.316,
+        114.152,
+        22.387
+      ]
+    },
+    "Tsuen Wan": {
+      "name": "Tsuen Wan",
+      "en": "Tsuen Wan",
+      "zh": "荃灣",
+      "zhFull": "荃灣區",
+      "bbox": [
+        113.993,
+        22.311,
+        114.171,
+        22.42
+      ]
+    },
+    "Tuen Mun": {
+      "name": "Tuen Mun",
+      "en": "Tuen Mun",
+      "zh": "屯門",
+      "zhFull": "屯門區",
+      "bbox": [
+        113.872,
+        22.327,
+        114.068,
+        22.435
+      ]
+    },
+    "Yuen Long": {
+      "name": "Yuen Long",
+      "en": "Yuen Long",
+      "zh": "元朗",
+      "zhFull": "元朗區",
+      "bbox": [
+        113.929,
+        22.389,
+        114.13,
+        22.525
+      ]
+    },
+    "North": {
+      "name": "North",
+      "en": "North",
+      "zh": "北",
+      "zhFull": "北區",
+      "bbox": [
+        114.077,
+        22.464,
+        114.338,
+        22.564
+      ]
+    },
+    "Tai Po": {
+      "name": "Tai Po",
+      "en": "Tai Po",
+      "zh": "大埔",
+      "zhFull": "大埔區",
+      "bbox": [
+        114.11,
+        22.392,
+        114.444,
+        22.555
+      ]
+    },
+    "Sha Tin": {
+      "name": "Sha Tin",
+      "en": "Sha Tin",
+      "zh": "沙田",
+      "zhFull": "沙田區",
+      "bbox": [
+        114.139,
+        22.342,
+        114.256,
+        22.44
+      ]
+    },
+    "Sai Kung": {
+      "name": "Sai Kung",
+      "en": "Sai Kung",
+      "zh": "西貢",
+      "zhFull": "西貢區",
+      "bbox": [
+        114.219,
+        22.236,
+        114.408,
+        22.451
+      ]
+    },
+    "Islands": {
+      "name": "Islands",
+      "en": "Islands",
+      "zh": "離島",
+      "zhFull": "離島區",
+      "bbox": [
+        113.833,
+        22.152,
+        114.309,
+        22.326
+      ]
+    },
+    "Wan Chai": {
+      "name": "Wan Chai",
+      "en": "Wan Chai",
+      "zh": "灣仔",
+      "zhFull": "灣仔區",
+      "bbox": [
+        114.161,
+        22.252,
+        114.209,
+        22.287
+      ]
+    }
+  }
+}
