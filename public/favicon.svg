@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Building">
+  <rect width="32" height="32" rx="4" fill="#0c1f24"/>
+  <path fill="#e8f0ec" d="M7 26V10h6v16H7zm12 0V6h6v20h-6z"/>
+  <path fill="#1f7a5c" d="M9 12h2v2H9v-2zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm12-10h2v2h-2v-2zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
+  <path fill="#9bc4b4" d="M7 26h18v2H7z"/>
+</svg>
