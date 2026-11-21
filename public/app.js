@@ -26,7 +26,7 @@
       colRentB: "Rent B",
       colRentC: "Rent C",
       footerSources:
-        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk), Land Registry monthly ASP statistics, and Lands Department CSDI building footprints. Figures may be provisional. Building rent/asking listing feeds are not wired. Overview outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0).",
+        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk), Land Registry monthly ASP statistics, Lands Department CSDI building footprints, and MTR station points (CSDI mtr_venue_polygon centroids + MTR Corporation Limited bilingual open data). Figures may be provisional. Building rent/asking listing feeds are not wired. Overview outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0).",
       footerHost: "Cloudflare Worker",
       provisional: "provisional",
       asOf: (d, ym) =>
@@ -42,7 +42,7 @@
         "RVD regional average price/rent series for the parent region, plus Land Registry ASP counts for the matching published area.",
       detailMapTitle: "Building map",
       detailMapLede:
-        "CSDI LandsD building footprints. Select a building for name and rent/asking status.",
+        "CSDI LandsD building footprints plus MTR station markers. Select a building for name and rent/asking status.",
       buildingPick: "Select a building",
       attrStoreys: "Storeys",
       attrType: "Type",
@@ -56,6 +56,10 @@
       buildingsLoaded: (n, named) =>
         `${n} footprints${named ? " (named preferred)" : ""} · CSDI LandsD`,
       buildingsError: (m) => `Could not load buildings: ${m}`,
+      mtrLoaded: (n) =>
+        `${n} MTR station${n === 1 ? "" : "s"} in view · CSDI + MTR Corp`,
+      mtrLines: "Lines",
+      mtrPopupTitle: "MTR station",
       detailSub: (rvd, asp) =>
         `RVD region: ${rvd} · ASP area: ${asp || "n/a"}`,
       dataNotesLive: "Live",
@@ -97,7 +101,7 @@
       colRentB: "租金 B",
       colRentC: "租金 C",
       footerSources:
-        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計，以及地政總署 CSDI 建築物範圍。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。總覽界線：SimpleMaps 香港行政區（CC-BY-4.0）。",
+        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計、地政總署 CSDI 建築物範圍，以及港鐵站點（CSDI mtr_venue_polygon 形心 + 香港鐵路有限公司雙語開放數據）。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。總覽界線：SimpleMaps 香港行政區（CC-BY-4.0）。",
       footerHost: "Cloudflare Worker",
       provisional: "臨時",
       asOf: (d, ym) =>
@@ -113,7 +117,7 @@
         "差估署所屬大區平均售價／租金數列，以及土地註冊處該買賣合約分區宗數。",
       detailMapTitle: "樓宇地圖",
       detailMapLede:
-        "CSDI 地政總署建築物範圍；點選樓宇查看名稱與租金／叫價狀態。",
+        "CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。",
       buildingPick: "選擇樓宇",
       attrStoreys: "層數",
       attrType: "類型",
@@ -127,6 +131,9 @@
       buildingsLoaded: (n, named) =>
         `${n} 個樓宇範圍${named ? "（優先顯示有名稱）" : ""} · CSDI 地政總署`,
       buildingsError: (m) => `未能載入樓宇：${m}`,
+      mtrLoaded: (n) => `範圍內 ${n} 個港鐵站 · CSDI + 港鐵公司`,
+      mtrLines: "路線",
+      mtrPopupTitle: "港鐵站",
       detailSub: (rvd, asp) =>
         `差估署大區：${rvd} · 買賣合約分區：${asp || "不適用"}`,
       dataNotesLive: "已接駁",
@@ -221,11 +228,25 @@
   let mapData = null;
   let districtsMeta = null;
   let districtsGeo = null;
+  let mtrStationsGeo = null;
   let selectedAspId = null;
   let activeDistrict = null;
   let leafletMap = null;
   let leafletLayers = null;
   let selectedBuildingLayer = null;
+
+  const LINE_LABELS = {
+    AEL: { en: "Airport Express", zh: "機場快線" },
+    DRL: { en: "Disneyland Resort", zh: "迪士尼線" },
+    EAL: { en: "East Rail", zh: "東鐵線" },
+    ISL: { en: "Island", zh: "港島線" },
+    KTL: { en: "Kwun Tong", zh: "觀塘線" },
+    SIL: { en: "South Island", zh: "南港島線" },
+    TCL: { en: "Tung Chung", zh: "東涌線" },
+    TKL: { en: "Tseung Kwan O", zh: "將軍澳線" },
+    TML: { en: "Tuen Ma", zh: "屯馬線" },
+    TWL: { en: "Tsuen Wan", zh: "荃灣線" },
+  };
 
   const $ = (sel) => document.querySelector(sel);
 
@@ -717,6 +738,86 @@
         : "Official attributes: name / storeys / height when present. Rent & asking are placeholder states.";
   }
 
+  function pointInBbox(coords, bbox) {
+    const [lon, lat] = coords;
+    const [minLon, minLat, maxLon, maxLat] = bbox;
+    return lon >= minLon && lon <= maxLon && lat >= minLat && lat <= maxLat;
+  }
+
+  function lineLabel(code) {
+    const meta = LINE_LABELS[code];
+    if (!meta) return code;
+    return locale === "zh" ? meta.zh : meta.en;
+  }
+
+  function mtrPopupHtml(props) {
+    const name =
+      locale === "zh"
+        ? props.nameZh || props.nameEn
+        : props.nameEn || props.nameZh;
+    const alt =
+      locale === "zh"
+        ? props.nameEn && props.nameEn !== props.nameZh
+          ? props.nameEn
+          : ""
+        : props.nameZh && props.nameZh !== props.nameEn
+          ? props.nameZh
+          : "";
+    const lines = (props.lines || [])
+      .map((c) => `<span class="mtr-line">${lineLabel(c)} (${c})</span>`)
+      .join("");
+    return `<div class="mtr-popup">
+      <div class="mtr-popup-kicker">${t("mtrPopupTitle")}</div>
+      <strong>${name || "—"}</strong>
+      ${alt ? `<div class="mtr-popup-alt">${alt}</div>` : ""}
+      ${
+        lines
+          ? `<div class="mtr-popup-lines"><span class="mtr-popup-label">${t(
+              "mtrLines",
+            )}</span> ${lines}</div>`
+          : ""
+      }
+    </div>`;
+  }
+
+  function addMtrMarkers(bbox) {
+    if (!window.L || !leafletMap || !mtrStationsGeo) return 0;
+    const features = (mtrStationsGeo.features || []).filter((f) => {
+      const c = f.geometry?.coordinates;
+      return Array.isArray(c) && pointInBbox(c, bbox);
+    });
+    if (!features.length) return 0;
+
+    if (!leafletMap.getPane("mtrPane")) {
+      leafletMap.createPane("mtrPane");
+      leafletMap.getPane("mtrPane").style.zIndex = 650;
+    }
+
+    L.geoJSON(
+      { type: "FeatureCollection", features },
+      {
+        pane: "mtrPane",
+        pointToLayer(_feature, latlng) {
+          return L.circleMarker(latlng, {
+            radius: 6,
+            color: "#0c1f24",
+            weight: 1.5,
+            fillColor: "#c9832a",
+            fillOpacity: 0.95,
+            className: "mtr-station-marker",
+          });
+        },
+        onEachFeature(feature, layer) {
+          layer.bindPopup(mtrPopupHtml(feature.properties || {}), {
+            className: "mtr-popup-wrap",
+            maxWidth: 260,
+          });
+        },
+      },
+    ).addTo(leafletMap);
+    return features.length;
+  }
+
   async function loadDistrictMap(dcName) {
     const meta = districtsMeta?.districts?.[dcName];
     const mapEl = $("#district-leaflet");
@@ -740,7 +841,7 @@
     leafletMap = L.map(mapEl, { scrollWheelZoom: true });
     L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> · &copy; CARTO · buildings: CSDI LandsD',
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> · &copy; CARTO · buildings: CSDI LandsD · MTR: CSDI + MTR Corp',
       subdomains: "abcd",
       maxZoom: 19,
     }).addTo(leafletMap);
@@ -767,6 +868,7 @@
       }
     }
 
+    let mtrCount = 0;
     try {
       const res = await fetch(
         `/api/buildings?bbox=${meta.bbox.join(",")}&limit=700`,
@@ -805,6 +907,8 @@
         },
       }).addTo(leafletMap);
 
+      mtrCount = addMtrMarkers(meta.bbox);
+
       buildingsMeta.textContent = t("buildingsLoaded")(
         payload.count,
         payload.namedOnly,
@@ -813,8 +917,15 @@
         buildingsMeta.textContent +=
           locale === "zh" ? "（已截斷）" : " (truncated)";
       }
+      if (mtrCount) {
+        buildingsMeta.textContent += ` · ${t("mtrLoaded")(mtrCount)}`;
+      }
     } catch (err) {
       buildingsMeta.textContent = t("buildingsError")(err.message);
+      mtrCount = addMtrMarkers(meta.bbox);
+      if (mtrCount) {
+        buildingsMeta.textContent += ` · ${t("mtrLoaded")(mtrCount)}`;
+      }
     }
 
     setTimeout(() => leafletMap?.invalidateSize(), 80);
@@ -1038,21 +1149,24 @@
   }
 
   async function loadMapData() {
-    if (mapData && districtsMeta && districtsGeo) {
-      return { mapData, districtsMeta, districtsGeo };
+    if (mapData && districtsMeta && districtsGeo && mtrStationsGeo) {
+      return { mapData, districtsMeta, districtsGeo, mtrStationsGeo };
     }
-    const [pathsRes, metaRes, geoRes] = await Promise.all([
+    const [pathsRes, metaRes, geoRes, mtrRes] = await Promise.all([
       fetch("/hk-districts-paths.json"),
       fetch("/hk-districts-meta.json"),
       fetch("/hk-districts.geojson"),
+      fetch("/mtr-stations.geojson"),
     ]);
     if (!pathsRes.ok) throw new Error(`Map HTTP ${pathsRes.status}`);
     if (!metaRes.ok) throw new Error(`Meta HTTP ${metaRes.status}`);
     if (!geoRes.ok) throw new Error(`Geo HTTP ${geoRes.status}`);
+    if (!mtrRes.ok) throw new Error(`MTR HTTP ${mtrRes.status}`);
     mapData = await pathsRes.json();
     districtsMeta = await metaRes.json();
     districtsGeo = await geoRes.json();
-    return { mapData, districtsMeta, districtsGeo };
+    mtrStationsGeo = await mtrRes.json();
+    return { mapData, districtsMeta, districtsGeo, mtrStationsGeo };
   }
 
   async function load() {

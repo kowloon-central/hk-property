@@ -5,6 +5,7 @@ Cloudflare Worker dashboard for official Hong Kong property stats:
 - **RVD** monthly private-domestic price & rent indices, plus average prices/rents by region (with history)
 - **Land Registry** monthly ASP counts by published district / region
 - **District drill-down**: CSDI LandsD building footprints + bilingual names, storeys, heights
+- **MTR stations**: static GeoJSON (CSDI `mtr_venue_polygon` centroids ⋈ MTR Corp bilingual CSV) as Leaflet markers on district drill-down
 
 Bilingual UI: default **繁體中文**, toggle **English ↔ 繁體**. Preference persisted in `localStorage` (`hkp-lang`).
 
@@ -18,7 +19,7 @@ Live URL:
 
 - Cloudflare Workers + static assets (`public/`)
 - TypeScript fetchers for RVD CSV + Land Registry JSON + CSDI ArcGIS building query
-- Chart.js charts + SimpleMaps district choropleth (overview) + Leaflet building map (drill-down)
+- Chart.js charts + SimpleMaps district choropleth (overview) + Leaflet building map with MTR markers (drill-down)
 
 ## Setup & deploy
 
@@ -58,6 +59,13 @@ npm run dev
 | Overview 18-district outlines | SimpleMaps HK admin1 SVG (CC-BY-4.0) |
 | Drill-down district polygons | Derived from [hupili/geohk](https://github.com/hupili/geohk) DC land GeoJSON (census-era DC boundaries; approximate match to today’s 18 districts) |
 | Building footprints + names / storeys / heights | Lands Department **Building** layer via [CSDI](https://portal.csdi.gov.hk/) / data.gov.hk |
+| MTR station markers (bilingual + line codes) | Static `public/mtr-stations.geojson` — CSDI LandsD `mtr_venue_polygon` centroids joined to [MTR Corp](https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv) open data (interchanges aggregated; Light Rail excluded) |
+
+Refresh the MTR snapshot:
+
+```bash
+npm run build:mtr
+```
 
 ### Placeholder (intentionally not scraped)
 
@@ -78,6 +86,8 @@ npm run dev
 | Popular developments indices | https://www.rvd.gov.hk/datagovhk/1.5M.csv |
 | Land Registry ASP JSON | https://www.landreg.gov.hk/datagovhk/YYYYMM_data.json |
 | CSDI buildings (ArcGIS query) | `landsd_rcd_1637211194312_35158` MapServer/0 |
+| CSDI MTR venue polygons (WFS) | `https://mapapi.hkmapservice.gov.hk/ogc/wfs/indoor/mtr_venue_polygon` |
+| MTR lines & stations CSV | https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv |
 
 ## Repo
 

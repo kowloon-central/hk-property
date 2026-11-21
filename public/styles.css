@@ -569,6 +569,69 @@ footer a {
   filter: brightness(1.08);
 }
 
+.mtr-station-marker {
+  cursor: pointer;
+}
+
+.mtr-popup-wrap .leaflet-popup-content-wrapper {
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(12, 31, 36, 0.14);
+}
+
+.mtr-popup-wrap .leaflet-popup-content {
+  margin: 0.65rem 0.8rem;
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+
+.mtr-popup-kicker {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.mtr-popup strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.mtr-popup-alt {
+  margin-top: 0.15rem;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.mtr-popup-lines {
+  margin-top: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.mtr-popup-label {
+  width: 100%;
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mtr-line {
+  display: inline-block;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(201, 131, 42, 0.16);
+  color: #7a4f12;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
 @media (max-width: 900px) {
   .kpis,
   .chart-grid,

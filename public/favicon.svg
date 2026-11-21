@@ -1,6 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Building">
-  <rect width="32" height="32" rx="4" fill="#0c1f24"/>
-  <path fill="#e8f0ec" d="M7 26V10h6v16H7zm12 0V6h6v20h-6z"/>
-  <path fill="#1f7a5c" d="M9 12h2v2H9v-2zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm12-10h2v2h-2v-2zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z"/>
-  <path fill="#9bc4b4" d="M7 26h18v2H7z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Building with eyes">
+  <rect width="32" height="32" rx="5" fill="#0c1f24"/>
+  <!-- Building body -->
+  <path fill="#e8f0ec" d="M7 28V13h7v15H7zm11 0V9h8v19h-8z"/>
+  <path fill="#9bc4b4" d="M6 28h20v2H6z"/>
+  <!-- Lower windows only -->
+  <path fill="#1f7a5c" d="M9 17h2v2H9zm0 4h2v2H9zm0 4h2v2H9zm3-8h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm9-6h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2zm3-8h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2z"/>
+  <!-- Pair of eyes crowning the tall tower (reads at 16–32px) -->
+  <circle cx="20.5" cy="12" r="2.75" fill="#f7fbf9"/>
+  <circle cx="25.5" cy="12" r="2.75" fill="#f7fbf9"/>
+  <circle cx="20.85" cy="12.2" r="1.2" fill="#0c1f24"/>
+  <circle cx="25.85" cy="12.2" r="1.2" fill="#0c1f24"/>
+  <circle cx="21.2" cy="11.85" r="0.4" fill="#f7fbf9"/>
+  <circle cx="26.2" cy="11.85" r="0.4" fill="#f7fbf9"/>
 </svg>
