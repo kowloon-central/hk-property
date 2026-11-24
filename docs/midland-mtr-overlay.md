@@ -1,34 +1,38 @@
-# Midland MTR image overlay — georeferencing notes
+# Midland MTR July 2024 price deltas
 
-Source image (do not scrape other Midland pages):
+## Product behaviour
 
-`https://res-cms.midland.com.hk/property-news/wp-content/uploads/2024/08/P130824-MTR.png`
+The live map **does not** hotlink or overlay Midland’s schematic PNG.
+Station markers are styled from our own snapshot JSON:
 
-Served to the browser via Worker proxy `/api/proxy/midland-mtr.png` (CORS + caching). Attribute **美聯物業 Midland Realty**.
+`public/midland-mtr-jul2024.json`
 
-## What the image is
+joined at runtime to `public/mtr-stations.geojson` by `stationCode`.
 
-A **schematic** Midland “railway estates” infographic (July 2024 registrations / psf), not a geographic basemap. Line geometry is diagrammatic (45°/90° transit style). Exact station-to-latlon alignment is **impossible**.
+Toggle **美聯港鐵升跌 / Midland MTR Δ** on the district building map to colour markers:
 
-## Assumed image bounds (WGS84)
+| Colour | Meaning |
+|--------|---------|
+| Green | MoM average saleable psf **up** |
+| Red | MoM average saleable psf **down** |
+| Amber | Flat (0%) |
+| Grey | On chart but no usable MoM % (0 deals, `#`, or new vs prior-month zero) |
 
-Leaflet `imageOverlay` corners used in `public/app.js`:
+Popups show the Midland representative estate, July 2024 avg psf, MoM %, and registration count.
 
-| Corner | Latitude | Longitude | Rationale |
-|--------|----------|-----------|-----------|
-| Southwest | 22.16 | 113.82 | Covers Tung Chung / south Lantau tip of the diagram |
-| Northeast | 22.56 | 114.42 | Covers Sheung Shui / Lo Wu / Wu Kai Sha / LOHAS Park extent |
+## Provenance
 
-```js
-L.latLngBounds([22.16, 113.82], [22.56, 114.42])
-```
+| Field | Value |
+|-------|--------|
+| Period | July 2024 Land Registry registrations (Midland: July registrations mainly reflect June deals) |
+| Chart | [P130824-MTR.png](https://res-cms.midland.com.hk/property-news/wp-content/uploads/2024/08/P130824-MTR.png) (Aug 2024 Midland property-news image) |
+| Article | [Midland monthly railway-estate update](https://www.midland.com.hk/zh-hk/property-news/app%E8%B3%87%E8%A8%8A%E4%B8%BB%E9%A0%81/%E3%80%90%E6%AF%8F%E6%9C%88%E6%9B%B4%E6%96%B0%E3%80%91%E9%90%B5%E8%B7%AF%E7%9B%A4%E6%9C%80%E6%96%B0%E8%A1%8C%E6%83%85%E9%9A%A8%E6%99%82%E7%9D%87/) |
+| Attribution | 土地註冊處及美聯物業研究中心 / Land Registry + Midland Realty Research Centre |
 
-These bounds approximate Hong Kong’s inhabited coastal envelope so the schematic roughly sits over the territory when zoomed out. At district zoom, expect **large horizontal/vertical drift** vs real MTR stations (use the official CSDI + MTR markers for geography).
+Open machine-readable per-station MoM series was **not** available from allowed sources, so values were **digitized from the Midland chart** (cross-checked against Midland/press summaries for the most active estates). Each chart box is **one representative estate** at that station — not a full station-catchment average.
 
-## Opacity & UX
+`priceDeltaFlag: "#"` matches Midland’s chart note that the MoM % is not applicable when volume/quality skews the average.
 
-Default opacity ~0.55 when toggled on so CARTO/OSM + buildings remain readable. Toggle off by default.
+## Historical note (removed overlay)
 
-## Refresh
-
-If Midland replaces the PNG URL, update the Worker proxy target and this note. Do not scrape Midland HTML for alternatives.
+An earlier build proxied the PNG as a Leaflet `imageOverlay` with approximate WGS84 bounds. That was schematic-only and drifted badly at district zoom. The proxy route and overlay toggle were removed; keep the PNG URL only as a **data-reference citation** in this doc and in JSON `meta.chartUrl`.

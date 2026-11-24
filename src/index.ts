@@ -100,52 +100,6 @@ export default {
       }
     }
 
-    /** Proxy Midland MTR schematic PNG (CORS-safe). Do not scrape other Midland pages. */
-    if (
-      url.pathname === "/api/proxy/midland-mtr.png" ||
-      url.pathname === "/api/proxy/midland-mtr"
-    ) {
-      const upstream =
-        "https://res-cms.midland.com.hk/property-news/wp-content/uploads/2024/08/P130824-MTR.png";
-      try {
-        const cache = caches.default;
-        const cacheKey = new Request(new URL(url.pathname, url.origin).toString(), {
-          method: "GET",
-        });
-        const hit = await cache.match(cacheKey);
-        if (hit) return hit;
-
-        const upstreamRes = await fetch(upstream, {
-          headers: {
-            "User-Agent":
-              "HKPropertyWorker/0.1 (+https://github.com/kowloon-central/hk-property)",
-            Accept: "image/png,image/*;q=0.8,*/*;q=0.5",
-          },
-        });
-        if (!upstreamRes.ok) {
-          return json(
-            { error: `Upstream Midland PNG HTTP ${upstreamRes.status}` },
-            502,
-          );
-        }
-        const body = await upstreamRes.arrayBuffer();
-        const res = new Response(body, {
-          status: 200,
-          headers: {
-            "Content-Type": "image/png",
-            "Cache-Control": "public, max-age=86400",
-            "Access-Control-Allow-Origin": "*",
-            "X-Source-Attribution": "Midland Realty / 美聯物業",
-          },
-        });
-        _ctx.waitUntil(cache.put(cacheKey, res.clone()));
-        return res;
-      } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        return json({ error: message }, 502);
-      }
-    }
-
     if (env.ASSETS) {
       return env.ASSETS.fetch(request);
     }

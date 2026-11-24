@@ -6,7 +6,7 @@ Cloudflare Worker dashboard for official Hong Kong property stats:
 - **Land Registry** monthly ASP counts by published district / region
 - **District drill-down**: CSDI LandsD building footprints + bilingual names, storeys, heights
 - **MTR stations**: static GeoJSON (CSDI `mtr_venue_polygon` centroids ⋈ MTR Corp bilingual CSV) as Leaflet markers on district drill-down
-- **Map layer toggles** (district drill-down): CARTO ↔ OpenStreetMap basemap, Midland MTR schematic image overlay (Worker-proxied), EDB primary/secondary school locations, POA primary school-net polygons
+- **Map layer toggles** (district drill-down): CARTO ↔ OpenStreetMap basemap, Midland July 2024 railway-estate MoM Δ on MTR markers (digitized JSON; PNG not overlaid), EDB primary/secondary school locations, POA primary school-net polygons
 
 Bilingual UI: default **繁體中文**, toggle **English ↔ 繁體**. Preference persisted in `localStorage` (`hkp-lang`).
 
@@ -46,8 +46,6 @@ npm run dev
 | `GET /api/market` | Indices, regional series, ASP, data notes |
 | `GET /api/asp-history?id=sha-tin&months=18` | Monthly ASP history for a Land Registry region id |
 | `GET /api/buildings?bbox=minLon,minLat,maxLon,maxLat&limit=700` | CSDI building footprints (named preferred) |
-| `GET /api/proxy/midland-mtr.png` | Proxied Midland MTR schematic PNG (CORS + cache) |
-
 ## What is live vs placeholder
 
 ### Live (official / open)
@@ -63,7 +61,7 @@ npm run dev
 | Building footprints + names / storeys / heights | Lands Department **Building** layer via [CSDI](https://portal.csdi.gov.hk/) / data.gov.hk |
 | MTR station markers (bilingual + line codes) | Static `public/mtr-stations.geojson` — CSDI LandsD `mtr_venue_polygon` centroids joined to [MTR Corp](https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv) open data (interchanges aggregated; Light Rail excluded) |
 | OpenStreetMap basemap toggle | Official `tile.openstreetmap.org` tiles with OSM attribution (vs default CARTO) |
-| Midland MTR schematic overlay | Proxied PNG image overlay; **schematic**, not geographic — see `docs/midland-mtr-overlay.md` |
+| Midland MTR price Δ (Jul 2024) | Digitized JSON `public/midland-mtr-jul2024.json` joined to MTR markers (green/red/% labels). Midland PNG is a **data reference only** — see `docs/midland-mtr-overlay.md` |
 | Primary / secondary school markers | Static `public/schools.geojson` from EDB [School Location and Information](http://www.edb.gov.hk/attachment/en/student-parents/sch-info/sch-search/sch-location-info/SCH_LOC_EDB.csv) |
 | POA primary school-net polygons | Static `public/poa-nets.geojson` from Esri China (HK) layer derived from EDB POA nets |
 
@@ -101,7 +99,7 @@ npm run build:poa       # needs tmp/poa-nets.geojson from Esri FeatureServer
 | MTR lines & stations CSV | https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv |
 | EDB school locations | http://www.edb.gov.hk/attachment/en/student-parents/sch-info/sch-search/sch-location-info/SCH_LOC_EDB.csv |
 | EDB POA school-net list | https://www.edb.gov.hk/attachment/datagovhk/POA_SchoolNet_EN.csv |
-| Midland MTR schematic PNG | https://res-cms.midland.com.hk/property-news/wp-content/uploads/2024/08/P130824-MTR.png |
+| Midland railway-estate chart (digitized reference) | https://res-cms.midland.com.hk/property-news/wp-content/uploads/2024/08/P130824-MTR.png |
 
 ## Repo
 

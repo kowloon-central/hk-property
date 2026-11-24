@@ -1,0 +1,637 @@
+{
+  "meta": {
+    "title": "Midland 75 railway-estate July 2024 registrations snapshot",
+    "period": "2024-07",
+    "published": "2024-08",
+    "chartUrl": "https://res-cms.midland.com.hk/property-news/wp-content/uploads/2024/08/P130824-MTR.png",
+    "articleUrl": "https://www.midland.com.hk/zh-hk/property-news/app%E8%B3%87%E8%A8%8A%E4%B8%BB%E9%A0%81/%E3%80%90%E6%AF%8F%E6%9C%88%E6%9B%B4%E6%96%B0%E3%80%91%E9%90%B5%E8%B7%AF%E7%9B%A4%E6%9C%80%E6%96%B0%E8%A1%8C%E6%83%85%E9%9A%A8%E6%99%82%E7%9D%87/",
+    "attribution": "Land Registry registrations aggregated by Midland Realty Research Centre; values digitized from Midland chart P130824-MTR (Aug 2024) for July 2024 registrations. One representative estate per station — not a true station-wide average.",
+    "attributionZh": "土地註冊處登記、美聯物業研究中心彙整；數值由美聯圖表 P130824-MTR（2024年8月刊、反映2024年7月註冊）人手數位化。每站一個代表屋苑，並非站區全面平均。",
+    "notes": [
+      "MoM price % marked # on the chart means Midland flagged the change as not applicable (thin/quality-skewed sample).",
+      "dealsDeltaPrevZero=true means chart showed 上月0宗 (no MoM % for volume).",
+      "Stations absent from this file were not on the Midland 75-estate chart.",
+      "Open machine-readable station MoM series was not available; this digitization is the product data layer. The Midland PNG is a reference only — not a live map overlay."
+    ],
+    "digitizedAt": "2026-11-24"
+  },
+  "stations": {
+    "TUM": {
+      "estateZh": "瓏門",
+      "estateEn": "Century Gateway",
+      "avgPsf": 14400,
+      "priceDeltaPct": -3,
+      "deals": 6,
+      "dealsDeltaPct": 50
+    },
+    "SIH": {
+      "estateZh": "疊茵庭",
+      "estateEn": "Beneville",
+      "avgPsf": 10700,
+      "priceDeltaPct": 4,
+      "deals": 6,
+      "dealsDeltaPct": 20
+    },
+    "TIS": {
+      "estateZh": "嘉湖山莊",
+      "estateEn": "Kingswood Villas",
+      "avgPsf": 8600,
+      "priceDeltaPct": 0,
+      "deals": 28,
+      "dealsDeltaPct": -30
+    },
+    "LOP": {
+      "estateZh": "朗屏8號",
+      "estateEn": "The Spectra",
+      "avgPsf": 12500,
+      "priceDeltaPct": null,
+      "deals": 3,
+      "dealsDeltaPct": null,
+      "dealsDeltaPrevZero": true
+    },
+    "YUL": {
+      "estateZh": "YOHO TOWN",
+      "estateEn": "YOHO TOWN",
+      "avgPsf": 13500,
+      "priceDeltaPct": 0,
+      "deals": 8,
+      "dealsDeltaPct": -27
+    },
+    "TWW": {
+      "estateZh": "海之戀",
+      "estateEn": "Ocean Pride",
+      "avgPsf": 17300,
+      "priceDeltaPct": -3,
+      "deals": 4,
+      "dealsDeltaPct": -56
+    },
+    "NAC": {
+      "estateZh": "匯璽",
+      "estateEn": "Cullinan West",
+      "avgPsf": 20800,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 6,
+      "dealsDeltaPct": 0
+    },
+    "AUS": {
+      "estateZh": "THE AUSTIN",
+      "estateEn": "THE AUSTIN",
+      "avgPsf": 28500,
+      "priceDeltaPct": 3,
+      "deals": 2,
+      "dealsDeltaPct": 0
+    },
+    "HUH": {
+      "estateZh": "都會軒",
+      "estateEn": "The Metropolis Residence",
+      "avgPsf": 13800,
+      "priceDeltaPct": -5,
+      "deals": 2,
+      "dealsDeltaPct": 0
+    },
+    "HOM": {
+      "estateZh": "天鑄",
+      "estateEn": "Ultima",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "TKW": {
+      "estateZh": "半山壹號",
+      "estateEn": "Celestial Heights",
+      "avgPsf": 16700,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 4,
+      "dealsDeltaPct": 33
+    },
+    "SUW": {
+      "estateZh": "傲雲峰",
+      "estateEn": "Sky Tower",
+      "avgPsf": 13900,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 5,
+      "dealsDeltaPct": 400
+    },
+    "KAT": {
+      "estateZh": "啟德1號",
+      "estateEn": "One Kai Tak",
+      "avgPsf": 19100,
+      "priceDeltaPct": null,
+      "deals": 1,
+      "dealsDeltaPct": null,
+      "dealsDeltaPrevZero": true
+    },
+    "DIH": {
+      "estateZh": "星河明居",
+      "estateEn": "Galaxia",
+      "avgPsf": 14200,
+      "priceDeltaPct": 4,
+      "deals": 3,
+      "dealsDeltaPct": -40
+    },
+    "TAW": {
+      "estateZh": "名城",
+      "estateEn": "Festival City",
+      "avgPsf": 15500,
+      "priceDeltaPct": 4,
+      "deals": 10,
+      "dealsDeltaPct": -44
+    },
+    "CKT": {
+      "estateZh": "溱岸8號",
+      "estateEn": "The Riverpark",
+      "avgPsf": 17400,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 2,
+      "dealsDeltaPct": -33
+    },
+    "STW": {
+      "estateZh": "花園城",
+      "estateEn": "Garden Rivera",
+      "avgPsf": 11400,
+      "priceDeltaPct": 7,
+      "deals": 3,
+      "dealsDeltaPct": 0
+    },
+    "CIO": {
+      "estateZh": "沙田第一城",
+      "estateEn": "City One Shatin",
+      "avgPsf": 12700,
+      "priceDeltaPct": -1,
+      "deals": 25,
+      "dealsDeltaPct": -11
+    },
+    "TSH": {
+      "estateZh": "嘉華星濤灣",
+      "estateEn": "Mountain Shore",
+      "avgPsf": 12500,
+      "priceDeltaPct": -2,
+      "deals": 1,
+      "dealsDeltaPct": -80
+    },
+    "HEO": {
+      "estateZh": "聽濤雅苑",
+      "estateEn": "Vista Paradiso",
+      "avgPsf": 11000,
+      "priceDeltaPct": -6,
+      "deals": 3,
+      "dealsDeltaPct": 200
+    },
+    "MOS": {
+      "estateZh": "新港城",
+      "estateEn": "Sunshine City",
+      "avgPsf": 13200,
+      "priceDeltaPct": -8,
+      "deals": 9,
+      "dealsDeltaPct": 50
+    },
+    "WKS": {
+      "estateZh": "銀湖·天峰",
+      "estateEn": "Lake Silver",
+      "avgPsf": 13100,
+      "priceDeltaPct": -4,
+      "deals": 3,
+      "dealsDeltaPct": -77
+    },
+    "SHS": {
+      "estateZh": "上水中心",
+      "estateEn": "Sheung Shui Centre",
+      "avgPsf": 12300,
+      "priceDeltaPct": -2,
+      "deals": 2,
+      "dealsDeltaPct": -33
+    },
+    "FAN": {
+      "estateZh": "粉嶺中心",
+      "estateEn": "Fanling Centre",
+      "avgPsf": 10600,
+      "priceDeltaPct": 2,
+      "deals": 3,
+      "dealsDeltaPct": 50
+    },
+    "TWO": {
+      "estateZh": "太湖花園",
+      "estateEn": "Serenity Park",
+      "avgPsf": 11100,
+      "priceDeltaPct": -2,
+      "deals": 12,
+      "dealsDeltaPct": 33
+    },
+    "TAP": {
+      "estateZh": "新達廣場",
+      "estateEn": "Uptown Plaza",
+      "avgPsf": 12400,
+      "priceDeltaPct": 5,
+      "deals": 6,
+      "dealsDeltaPct": 50
+    },
+    "FOT": {
+      "estateZh": "御龍山",
+      "estateEn": "The Palazzo",
+      "avgPsf": 17700,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 1,
+      "dealsDeltaPct": -50
+    },
+    "SHT": {
+      "estateZh": "沙田中心",
+      "estateEn": "Shatin Centre",
+      "avgPsf": 14400,
+      "priceDeltaPct": 5,
+      "deals": 2,
+      "dealsDeltaPct": -75
+    },
+    "KOT": {
+      "estateZh": "又一居",
+      "estateEn": "Yau Yat Tsuen",
+      "avgPsf": 16200,
+      "priceDeltaPct": -2,
+      "deals": 6,
+      "dealsDeltaPct": -14
+    },
+    "EXC": {
+      "estateZh": "會景閣",
+      "estateEn": "Convention Plaza Apartments",
+      "avgPsf": 17800,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 6,
+      "dealsDeltaPct": 200
+    },
+    "TSW": {
+      "estateZh": "綠楊新邨",
+      "estateEn": "Luk Yeung Sun Chuen",
+      "avgPsf": 11000,
+      "priceDeltaPct": -3,
+      "deals": 6,
+      "dealsDeltaPct": 0
+    },
+    "TWH": {
+      "estateZh": "縉庭山",
+      "estateEn": "Primrose Hill",
+      "avgPsf": 12800,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 1,
+      "dealsDeltaPct": -67
+    },
+    "KWH": {
+      "estateZh": "新葵興花園",
+      "estateEn": "Sun Kwai Hing Gardens",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "KWF": {
+      "estateZh": "新葵芳花園",
+      "estateEn": "New Kwai Fong Gardens",
+      "avgPsf": 12100,
+      "priceDeltaPct": -9,
+      "deals": 4,
+      "dealsDeltaPct": 33
+    },
+    "MEF": {
+      "estateZh": "美孚新邨",
+      "estateEn": "Mei Foo Sun Chuen",
+      "avgPsf": 9500,
+      "priceDeltaPct": -4,
+      "deals": 27,
+      "dealsDeltaPct": 13
+    },
+    "LCK": {
+      "estateZh": "泓景臺",
+      "estateEn": "Banyan Garden",
+      "avgPsf": 15100,
+      "priceDeltaPct": -1,
+      "deals": 7,
+      "dealsDeltaPct": 0
+    },
+    "CSW": {
+      "estateZh": "美居中心",
+      "estateEn": "Manor Centre",
+      "avgPsf": 11400,
+      "priceDeltaPct": -3,
+      "deals": 1,
+      "dealsDeltaPct": -75
+    },
+    "PRE": {
+      "estateZh": "別樹華軒",
+      "estateEn": "Bijou Court",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "MOK": {
+      "estateZh": "SKYPARK",
+      "estateEn": "SKYPARK",
+      "avgPsf": 15100,
+      "priceDeltaPct": -7,
+      "deals": 1,
+      "dealsDeltaPct": -50
+    },
+    "YMT": {
+      "estateZh": "窩打老道8號",
+      "estateEn": "8 Waterloo",
+      "avgPsf": 15200,
+      "priceDeltaPct": -5,
+      "deals": 2,
+      "dealsDeltaPct": 100
+    },
+    "JOR": {
+      "estateZh": "港景峯",
+      "estateEn": "The Victoria Towers",
+      "avgPsf": 21100,
+      "priceDeltaPct": -1,
+      "deals": 2,
+      "dealsDeltaPct": 100
+    },
+    "TST": {
+      "estateZh": "名鑄",
+      "estateEn": "The Masterpiece",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "WHA": {
+      "estateZh": "黃埔花園",
+      "estateEn": "Whampoa Garden",
+      "avgPsf": 12600,
+      "priceDeltaPct": -4,
+      "deals": 17,
+      "dealsDeltaPct": -23
+    },
+    "WTS": {
+      "estateZh": "現崇山",
+      "estateEn": "Lions Rise",
+      "avgPsf": 16600,
+      "priceDeltaPct": 4,
+      "deals": 3,
+      "dealsDeltaPct": 50
+    },
+    "CHH": {
+      "estateZh": "清水灣道8號",
+      "estateEn": "8 Clear Water Bay Road",
+      "avgPsf": 14000,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "-",
+      "deals": 4,
+      "dealsDeltaPct": 300
+    },
+    "KOB": {
+      "estateZh": "德福花園",
+      "estateEn": "Telford Gardens",
+      "avgPsf": 10200,
+      "priceDeltaPct": 2,
+      "deals": 10,
+      "dealsDeltaPct": 25
+    },
+    "KWT": {
+      "estateZh": "凱匯",
+      "estateEn": "Grand Central",
+      "avgPsf": 16400,
+      "priceDeltaPct": -4,
+      "deals": 7,
+      "dealsDeltaPct": -36
+    },
+    "LAT": {
+      "estateZh": "麗港城",
+      "estateEn": "Laguna City",
+      "avgPsf": 11000,
+      "priceDeltaPct": 0,
+      "deals": 11,
+      "dealsDeltaPct": -48
+    },
+    "YAT": {
+      "estateZh": "海傲灣",
+      "estateEn": "Peninsula East",
+      "avgPsf": 14400,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 3,
+      "dealsDeltaPct": 50
+    },
+    "TIK": {
+      "estateZh": "都會駅",
+      "estateEn": "Metro Town",
+      "avgPsf": 13300,
+      "priceDeltaPct": 0,
+      "deals": 13,
+      "dealsDeltaPct": 0
+    },
+    "POA": {
+      "estateZh": "新都城",
+      "estateEn": "Metro City",
+      "avgPsf": 12900,
+      "priceDeltaPct": -6,
+      "deals": 12,
+      "dealsDeltaPct": 50
+    },
+    "HAH": {
+      "estateZh": "東港城",
+      "estateEn": "East Point City",
+      "avgPsf": 14700,
+      "priceDeltaPct": -3,
+      "deals": 2,
+      "dealsDeltaPct": 100
+    },
+    "TKO": {
+      "estateZh": "天晉",
+      "estateEn": "The Wings",
+      "avgPsf": 18400,
+      "priceDeltaPct": 0,
+      "deals": 5,
+      "dealsDeltaPct": -55
+    },
+    "LHP": {
+      "estateZh": "日出康城",
+      "estateEn": "LOHAS Park",
+      "avgPsf": 12100,
+      "priceDeltaPct": 0,
+      "deals": 34,
+      "dealsDeltaPct": -23
+    },
+    "KET": {
+      "estateZh": "泓都",
+      "estateEn": "The Merton",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "HKU": {
+      "estateZh": "寶翠園",
+      "estateEn": "The Belcher's",
+      "avgPsf": 21100,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 2,
+      "dealsDeltaPct": -50
+    },
+    "SYP": {
+      "estateZh": "瑧蓺",
+      "estateEn": "Bohemian House",
+      "avgPsf": 21500,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 2,
+      "dealsDeltaPct": 100
+    },
+    "SHW": {
+      "estateZh": "帝后華庭",
+      "estateEn": "Queen's Terrace",
+      "avgPsf": 18900,
+      "priceDeltaPct": -2,
+      "deals": 2,
+      "dealsDeltaPct": 0
+    },
+    "WAC": {
+      "estateZh": "囍滙",
+      "estateEn": "The Avenue",
+      "avgPsf": 28100,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 5,
+      "dealsDeltaPct": 67
+    },
+    "CAB": {
+      "estateZh": "伊利莎伯大廈",
+      "estateEn": "Elizabeth House",
+      "avgPsf": 11700,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 1,
+      "dealsDeltaPct": -50
+    },
+    "TIH": {
+      "estateZh": "柏景臺",
+      "estateEn": "Park Towers",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "FOH": {
+      "estateZh": "富澤花園",
+      "estateEn": "Fullview Court",
+      "avgPsf": 13000,
+      "priceDeltaPct": -6,
+      "deals": 1,
+      "dealsDeltaPct": -67
+    },
+    "NOP": {
+      "estateZh": "港運城",
+      "estateEn": "Island Place",
+      "avgPsf": 14500,
+      "priceDeltaPct": -7,
+      "deals": 5,
+      "dealsDeltaPct": 150
+    },
+    "QUB": {
+      "estateZh": "華信花園",
+      "estateEn": "Wah Shun Gardens",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "TAK": {
+      "estateZh": "太古城",
+      "estateEn": "Taikoo Shing",
+      "avgPsf": 14400,
+      "priceDeltaPct": 2,
+      "deals": 33,
+      "dealsDeltaPct": 27
+    },
+    "SWH": {
+      "estateZh": "欣景花園",
+      "estateEn": "Felicity Garden",
+      "avgPsf": 13200,
+      "priceDeltaPct": null,
+      "deals": 1,
+      "dealsDeltaPct": null,
+      "dealsDeltaPrevZero": true
+    },
+    "SKW": {
+      "estateZh": "峻峰花園",
+      "estateEn": "Perfect Mount Gardens",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "HFC": {
+      "estateZh": "杏花邨",
+      "estateEn": "Heng Fa Chuen",
+      "avgPsf": 12200,
+      "priceDeltaPct": -3,
+      "deals": 14,
+      "dealsDeltaPct": -13
+    },
+    "CHW": {
+      "estateZh": "新翠花園",
+      "estateEn": "New Jade Gardens",
+      "avgPsf": 10200,
+      "priceDeltaPct": -9,
+      "deals": 2,
+      "dealsDeltaPct": 0
+    },
+    "TUC": {
+      "estateZh": "東堤灣畔",
+      "estateEn": "Tung Chung Crescent",
+      "avgPsf": 10200,
+      "priceDeltaPct": -4,
+      "deals": 1,
+      "dealsDeltaPct": -86
+    },
+    "TSY": {
+      "estateZh": "盈翠半島",
+      "estateEn": "Tierra Verde",
+      "avgPsf": 15600,
+      "priceDeltaPct": 8,
+      "deals": 5,
+      "dealsDeltaPct": -55
+    },
+    "OLY": {
+      "estateZh": "柏景灣",
+      "estateEn": "Park Avenue",
+      "avgPsf": null,
+      "priceDeltaPct": null,
+      "deals": 0,
+      "dealsDeltaPct": null
+    },
+    "KOW": {
+      "estateZh": "擎天半島",
+      "estateEn": "Sorrento",
+      "avgPsf": 23400,
+      "priceDeltaPct": -5,
+      "deals": 6,
+      "dealsDeltaPct": 20
+    },
+    "SOH": {
+      "estateZh": "海怡半島",
+      "estateEn": "South Horizons",
+      "avgPsf": 12700,
+      "priceDeltaPct": -1,
+      "deals": 10,
+      "dealsDeltaPct": -44
+    },
+    "LET": {
+      "estateZh": "南灣",
+      "estateEn": "Larvotto",
+      "avgPsf": 16200,
+      "priceDeltaPct": null,
+      "priceDeltaFlag": "#",
+      "deals": 2,
+      "dealsDeltaPct": 0
+    }
+  }
+}

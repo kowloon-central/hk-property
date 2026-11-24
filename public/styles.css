@@ -661,6 +661,59 @@ footer a {
   cursor: pointer;
 }
 
+.mtr-delta-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.mtr-delta-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.1rem 0.35rem 0.1rem 0.15rem;
+  border-radius: 999px;
+  background: rgba(243, 247, 244, 0.92);
+  border: 1px solid rgba(12, 31, 36, 0.14);
+  box-shadow: 0 4px 12px rgba(12, 31, 36, 0.12);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.mtr-delta-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  border: 1px solid #0c1f24;
+  flex: 0 0 auto;
+}
+
+.mtr-delta-pct {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.mtr-delta-up .mtr-delta-dot {
+  background: #1f7a5c;
+}
+
+.mtr-delta-up .mtr-delta-pct {
+  color: #145a44;
+}
+
+.mtr-delta-down .mtr-delta-dot {
+  background: #b33a3a;
+}
+
+.mtr-delta-down .mtr-delta-pct {
+  color: #8a2a2a;
+}
+
+.mtr-delta-flat .mtr-delta-dot {
+  background: #c9832a;
+}
+
 .mtr-popup-wrap .leaflet-popup-content-wrapper {
   border-radius: 10px;
   box-shadow: 0 10px 28px rgba(12, 31, 36, 0.14);
@@ -708,6 +761,25 @@ footer a {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.mtr-popup-midland {
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0.25rem;
+}
+
+.mtr-popup-mid-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.mtr-popup-mid-row > span {
+  color: var(--ink-soft);
 }
 
 .mtr-line {
