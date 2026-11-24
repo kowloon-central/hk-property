@@ -557,6 +557,94 @@ footer a {
   font-size: 0.78rem;
 }
 
+.map-layer-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.65rem;
+  margin: 0 0 0.55rem;
+  padding: 0.55rem 0.7rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.map-layer-group-label {
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.map-layer-sep {
+  width: 1px;
+  height: 1.1rem;
+  background: var(--line);
+}
+
+.map-layer-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  user-select: none;
+}
+
+.map-layer-toggle input {
+  accent-color: var(--jade);
+  cursor: pointer;
+}
+
+.map-band-note {
+  margin: 0 0 0.85rem;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.school-marker-primary {
+  cursor: pointer;
+}
+
+.school-marker-secondary {
+  cursor: pointer;
+}
+
+.school-popup-wrap .leaflet-popup-content-wrapper {
+  border-radius: 10px;
+}
+
+.school-popup-kicker {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.school-popup strong {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.school-popup-alt {
+  margin-top: 0.15rem;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+.school-popup-meta {
+  margin-top: 0.4rem;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+}
+
 .leaflet-container {
   font: inherit;
 }

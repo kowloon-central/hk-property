@@ -186,9 +186,50 @@
         <div class="panel-head">
           <h2 data-i18n="detailMapTitle">樓宇地圖</h2>
           <p data-i18n="detailMapLede">
-            CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。
+            CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。可用圖層切換底圖、美聯港鐵示意圖及學校／校網。
           </p>
         </div>
+        <div
+          id="map-layer-toggles"
+          class="map-layer-toggles"
+          role="group"
+          aria-label="Map layers"
+        >
+          <span class="map-layer-group-label" data-i18n="layerBasemap">底圖</span>
+          <label class="map-layer-toggle">
+            <input type="radio" name="basemap" value="carto" checked />
+            <span data-i18n="layerCarto">CARTO</span>
+          </label>
+          <label class="map-layer-toggle">
+            <input type="radio" name="basemap" value="osm" />
+            <span data-i18n="layerOsm">OpenStreetMap</span>
+          </label>
+          <span class="map-layer-sep" aria-hidden="true"></span>
+          <label class="map-layer-toggle">
+            <input type="checkbox" id="toggle-midland-mtr" />
+            <span data-i18n="layerMidlandMtr">美聯港鐵圖</span>
+          </label>
+          <label class="map-layer-toggle">
+            <input type="checkbox" id="toggle-mtr-stations" checked />
+            <span data-i18n="layerMtrStations">港鐵站</span>
+          </label>
+          <span class="map-layer-sep" aria-hidden="true"></span>
+          <label class="map-layer-toggle">
+            <input type="checkbox" id="toggle-primary-schools" />
+            <span data-i18n="layerPrimarySchools">小學</span>
+          </label>
+          <label class="map-layer-toggle">
+            <input type="checkbox" id="toggle-secondary-schools" />
+            <span data-i18n="layerSecondarySchools">中學</span>
+          </label>
+          <label class="map-layer-toggle">
+            <input type="checkbox" id="toggle-poa-nets" />
+            <span data-i18n="layerPoaNets">小一校網</span>
+          </label>
+        </div>
+        <p id="map-band-note" class="map-band-note" data-i18n="bandNote">
+          教育局並無公布學校「Band 1／2／3」圖層；Band 用於中一派位的學生組別。此處顯示官方學校位置及小一入學校網界線。
+        </p>
         <div class="detail-map-layout">
           <div id="district-leaflet" class="district-leaflet"></div>
           <aside id="building-panel" class="building-panel">
@@ -225,8 +266,7 @@
 
     <footer>
       <p data-i18n="footerSources">
-        資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計、地政總署 CSDI
-        建築物範圍，以及港鐵站點（CSDI mtr_venue_polygon 形心 + 香港鐵路有限公司雙語開放數據）。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。
+        資料來源：差餉物業估價署、土地註冊處、地政總署 CSDI、港鐵公司開放數據、教育局學校位置、小一校網界線、OpenStreetMap／CARTO，以及美聯物業港鐵示意圖。教育局並無公布學校 Band 圖層。樓宇租金／叫價盤源尚未接駁。
       </p>
       <p class="footer-meta">
         <span data-i18n="footerHost">Cloudflare Worker</span>

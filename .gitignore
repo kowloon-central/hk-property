@@ -4,6 +4,7 @@ node_modules/
 dist/
 .dev.vars
 .mf/
+tmp/
 *.log
 .git-askpass.sh
 .DS_Store

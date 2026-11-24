@@ -7,7 +7,9 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "typecheck": "tsc --noEmit",
-    "build:mtr": "node scripts/build-mtr-stations.mjs"
+    "build:mtr": "node scripts/build-mtr-stations.mjs",
+    "build:schools": "node scripts/build-schools.mjs",
+    "build:poa": "node scripts/build-poa-nets.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261118.1",

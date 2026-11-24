@@ -26,8 +26,28 @@
       colRentB: "Rent B",
       colRentC: "Rent C",
       footerSources:
-        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk), Land Registry monthly ASP statistics, Lands Department CSDI building footprints, and MTR station points (CSDI mtr_venue_polygon centroids + MTR Corporation Limited bilingual open data). Figures may be provisional. Building rent/asking listing feeds are not wired. Overview outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0).",
+        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk), Land Registry monthly ASP statistics, Lands Department CSDI building footprints, MTR station points (CSDI mtr_venue_polygon centroids + MTR Corporation Limited bilingual open data), EDB school locations (data.gov.hk), Esri China (HK) POA school-net boundaries (EDB-derived), OpenStreetMap contributors, CARTO basemap, and Midland Realty MTR schematic (image overlay; not geographic). EDB does not publish school Band 1/2/3 polygons — bands apply to students. Figures may be provisional. Building rent/asking listing feeds are not wired. Overview outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0).",
       footerHost: "Cloudflare Worker",
+      layerBasemap: "Basemap",
+      layerCarto: "CARTO",
+      layerOsm: "OpenStreetMap",
+      layerMidlandMtr: "Midland MTR map",
+      layerMtrStations: "MTR stations",
+      layerPrimarySchools: "Primary schools",
+      layerSecondarySchools: "Secondary schools",
+      layerPoaNets: "POA school nets",
+      bandNote:
+        "EDB does not publish school “Band 1/2/3” layers; bands are student groups in SSPA. Shown here: official school locations and Primary One Admission net boundaries.",
+      schoolPrimary: "Primary school",
+      schoolSecondary: "Secondary school",
+      schoolDistrict: "District",
+      schoolFinance: "Finance",
+      schoolsLoaded: (n, level) =>
+        `${n} ${level === "PRIMARY" ? "primary" : "secondary"} school${
+          n === 1 ? "" : "s"
+        } · EDB`,
+      poaLoaded: (n) => `${n} POA net${n === 1 ? "" : "s"} in view`,
+      midlandOverlayNote: "Midland MTR schematic overlay (approx. bounds)",
       provisional: "provisional",
       asOf: (d, ym) =>
         ym ? `Indices as of ${d} · ASP month ${ym}` : `Indices as of ${d}`,
@@ -42,7 +62,7 @@
         "RVD regional average price/rent series for the parent region, plus Land Registry ASP counts for the matching published area.",
       detailMapTitle: "Building map",
       detailMapLede:
-        "CSDI LandsD building footprints plus MTR station markers. Select a building for name and rent/asking status.",
+        "CSDI LandsD building footprints plus MTR station markers. Select a building for name and rent/asking status. Toggle basemap, Midland MTR schematic, and schools / POA nets.",
       buildingPick: "Select a building",
       attrStoreys: "Storeys",
       attrType: "Type",
@@ -101,8 +121,26 @@
       colRentB: "租金 B",
       colRentC: "租金 C",
       footerSources:
-        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計、地政總署 CSDI 建築物範圍，以及港鐵站點（CSDI mtr_venue_polygon 形心 + 香港鐵路有限公司雙語開放數據）。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。總覽界線：SimpleMaps 香港行政區（CC-BY-4.0）。",
+        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計、地政總署 CSDI 建築物範圍、港鐵站點（CSDI mtr_venue_polygon 形心 + 香港鐵路有限公司雙語開放數據）、教育局學校位置（data.gov.hk）、Esri China (HK) 小一入學校網界線（源自教育局）、OpenStreetMap 貢獻者、CARTO 底圖，以及美聯物業港鐵沿線示意圖（圖像疊加；非精確地理對位）。教育局並無公布學校 Band 1／2／3 圖層——Band 用於學生派位。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。總覽界線：SimpleMaps 香港行政區（CC-BY-4.0）。",
       footerHost: "Cloudflare Worker",
+      layerBasemap: "底圖",
+      layerCarto: "CARTO",
+      layerOsm: "OpenStreetMap",
+      layerMidlandMtr: "美聯港鐵圖",
+      layerMtrStations: "港鐵站",
+      layerPrimarySchools: "小學",
+      layerSecondarySchools: "中學",
+      layerPoaNets: "小一校網",
+      bandNote:
+        "教育局並無公布學校「Band 1／2／3」圖層；Band 用於中一派位的學生組別。此處顯示官方學校位置及小一入學校網界線。",
+      schoolPrimary: "小學",
+      schoolSecondary: "中學",
+      schoolDistrict: "分區",
+      schoolFinance: "資助種類",
+      schoolsLoaded: (n, level) =>
+        `範圍內 ${n} 所${level === "PRIMARY" ? "小學" : "中學"} · 教育局`,
+      poaLoaded: (n) => `範圍內 ${n} 個小一校網`,
+      midlandOverlayNote: "美聯港鐵示意圖疊加（約略範圍）",
       provisional: "臨時",
       asOf: (d, ym) =>
         ym ? `指數截至 ${d} · 買賣合約月份 ${ym}` : `指數截至 ${d}`,
@@ -117,7 +155,7 @@
         "差估署所屬大區平均售價／租金數列，以及土地註冊處該買賣合約分區宗數。",
       detailMapTitle: "樓宇地圖",
       detailMapLede:
-        "CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。",
+        "CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。可用圖層切換底圖、美聯港鐵示意圖及學校／校網。",
       buildingPick: "選擇樓宇",
       attrStoreys: "層數",
       attrType: "類型",
@@ -229,11 +267,55 @@
   let districtsMeta = null;
   let districtsGeo = null;
   let mtrStationsGeo = null;
+  let schoolsGeo = null;
+  let poaNetsGeo = null;
   let selectedAspId = null;
   let activeDistrict = null;
   let leafletMap = null;
   let leafletLayers = null;
   let selectedBuildingLayer = null;
+  let basemapLayer = null;
+  let mtrLayerGroup = null;
+  let midlandOverlay = null;
+  let primarySchoolLayer = null;
+  let secondarySchoolLayer = null;
+  let poaNetsLayer = null;
+  let activeDistrictBbox = null;
+  let mapLayerPrefs = {
+    basemap: "carto",
+    midland: false,
+    mtr: true,
+    primary: false,
+    secondary: false,
+    poa: false,
+  };
+
+  /** Schematic Midland MTR PNG — approximate HK envelope; see docs/midland-mtr-overlay.md */
+  const MIDLAND_MTR_BOUNDS = [
+    [22.16, 113.82],
+    [22.56, 114.42],
+  ];
+  const MIDLAND_MTR_URL = "/api/proxy/midland-mtr.png";
+
+  const BASEMAPS = {
+    carto: {
+      url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+      options: {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · &copy; <a href="https://carto.com/attributions">CARTO</a> · buildings: CSDI LandsD · MTR: CSDI + MTR Corp · schools: EDB · Midland schematic: Midland Realty',
+        subdomains: "abcd",
+        maxZoom: 19,
+      },
+    },
+    osm: {
+      url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      options: {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · buildings: CSDI LandsD · MTR: CSDI + MTR Corp · schools: EDB · Midland schematic: Midland Realty',
+        maxZoom: 19,
+      },
+    },
+  };
 
   const LINE_LABELS = {
     AEL: { en: "Airport Express", zh: "機場快線" },
@@ -485,6 +567,7 @@
 
   function closeDistrict() {
     activeDistrict = null;
+    activeDistrictBbox = null;
     $("#district-detail").hidden = true;
     $("#overview").hidden = false;
     if (leafletMap) {
@@ -492,6 +575,12 @@
       leafletMap = null;
       leafletLayers = null;
       selectedBuildingLayer = null;
+      basemapLayer = null;
+      mtrLayerGroup = null;
+      midlandOverlay = null;
+      primarySchoolLayer = null;
+      secondarySchoolLayer = null;
+      poaNetsLayer = null;
     }
     if (detailPriceChart) {
       detailPriceChart.destroy();
@@ -780,8 +869,30 @@
     </div>`;
   }
 
+  function setBasemap(kind) {
+    if (!window.L || !leafletMap) return;
+    const key = kind === "osm" ? "osm" : "carto";
+    mapLayerPrefs.basemap = key;
+    const cfg = BASEMAPS[key];
+    if (basemapLayer) {
+      leafletMap.removeLayer(basemapLayer);
+      basemapLayer = null;
+    }
+    basemapLayer = L.tileLayer(cfg.url, cfg.options).addTo(leafletMap);
+    const radio = document.querySelector(
+      `input[name="basemap"][value="${key}"]`,
+    );
+    if (radio) radio.checked = true;
+  }
+
   function addMtrMarkers(bbox) {
     if (!window.L || !leafletMap || !mtrStationsGeo) return 0;
+    if (mtrLayerGroup) {
+      leafletMap.removeLayer(mtrLayerGroup);
+      mtrLayerGroup = null;
+    }
+    if (!mapLayerPrefs.mtr) return 0;
+
     const features = (mtrStationsGeo.features || []).filter((f) => {
       const c = f.geometry?.coordinates;
       return Array.isArray(c) && pointInBbox(c, bbox);
@@ -793,7 +904,7 @@
       leafletMap.getPane("mtrPane").style.zIndex = 650;
     }
 
-    L.geoJSON(
+    mtrLayerGroup = L.geoJSON(
       { type: "FeatureCollection", features },
       {
         pane: "mtrPane",
@@ -818,12 +929,227 @@
     return features.length;
   }
 
+  function setMidlandOverlay(on) {
+    mapLayerPrefs.midland = Boolean(on);
+    const checkbox = $("#toggle-midland-mtr");
+    if (checkbox) checkbox.checked = mapLayerPrefs.midland;
+    if (!window.L || !leafletMap) return;
+
+    if (midlandOverlay) {
+      leafletMap.removeLayer(midlandOverlay);
+      midlandOverlay = null;
+    }
+    if (!mapLayerPrefs.midland) return;
+
+    if (!leafletMap.getPane("midlandPane")) {
+      leafletMap.createPane("midlandPane");
+      leafletMap.getPane("midlandPane").style.zIndex = 350;
+    }
+    midlandOverlay = L.imageOverlay(MIDLAND_MTR_URL, MIDLAND_MTR_BOUNDS, {
+      opacity: 0.55,
+      interactive: false,
+      pane: "midlandPane",
+      attribution: "Midland Realty / 美聯物業 MTR schematic",
+    }).addTo(leafletMap);
+  }
+
+  function schoolPopupHtml(props) {
+    const name =
+      locale === "zh"
+        ? props.nameZh || props.nameEn
+        : props.nameEn || props.nameZh;
+    const alt =
+      locale === "zh"
+        ? props.nameEn && props.nameEn !== props.nameZh
+          ? props.nameEn
+          : ""
+        : props.nameZh && props.nameZh !== props.nameEn
+          ? props.nameZh
+          : "";
+    const levelLabel =
+      props.level === "PRIMARY" ? t("schoolPrimary") : t("schoolSecondary");
+    const district =
+      locale === "zh"
+        ? props.districtZh || props.districtEn
+        : props.districtEn || props.districtZh;
+    const finance =
+      locale === "zh"
+        ? props.financeZh || props.financeEn
+        : props.financeEn || props.financeZh;
+    return `<div class="school-popup">
+      <div class="school-popup-kicker">${levelLabel}</div>
+      <strong>${name || "—"}</strong>
+      ${alt ? `<div class="school-popup-alt">${alt}</div>` : ""}
+      <div class="school-popup-meta">${t("schoolDistrict")}: ${
+        district || "—"
+      } · ${t("schoolFinance")}: ${finance || "—"}</div>
+    </div>`;
+  }
+
+  function addSchoolLayer(level, bbox) {
+    if (!window.L || !leafletMap || !schoolsGeo) return 0;
+    const isPrimary = level === "PRIMARY";
+    const existing = isPrimary ? primarySchoolLayer : secondarySchoolLayer;
+    if (existing) {
+      leafletMap.removeLayer(existing);
+      if (isPrimary) primarySchoolLayer = null;
+      else secondarySchoolLayer = null;
+    }
+    const enabled = isPrimary ? mapLayerPrefs.primary : mapLayerPrefs.secondary;
+    if (!enabled) return 0;
+
+    const features = (schoolsGeo.features || []).filter((f) => {
+      if (f.properties?.level !== level) return false;
+      const c = f.geometry?.coordinates;
+      return Array.isArray(c) && pointInBbox(c, bbox);
+    });
+    if (!features.length) return 0;
+
+    if (!leafletMap.getPane("schoolPane")) {
+      leafletMap.createPane("schoolPane");
+      leafletMap.getPane("schoolPane").style.zIndex = 660;
+    }
+
+    const layer = L.geoJSON(
+      { type: "FeatureCollection", features },
+      {
+        pane: "schoolPane",
+        pointToLayer(_feature, latlng) {
+          return L.circleMarker(latlng, {
+            radius: 5,
+            color: "#0c1f24",
+            weight: 1,
+            fillColor: isPrimary ? "#2f6fed" : "#8b3a62",
+            fillOpacity: 0.9,
+            className: isPrimary
+              ? "school-marker-primary"
+              : "school-marker-secondary",
+          });
+        },
+        onEachFeature(feature, lyr) {
+          lyr.bindPopup(schoolPopupHtml(feature.properties || {}), {
+            className: "school-popup-wrap",
+            maxWidth: 280,
+          });
+        },
+      },
+    ).addTo(leafletMap);
+
+    if (isPrimary) primarySchoolLayer = layer;
+    else secondarySchoolLayer = layer;
+    return features.length;
+  }
+
+  function featureIntersectsBbox(feature, bbox) {
+    const g = feature.geometry;
+    if (!g) return false;
+    const [minLon, minLat, maxLon, maxLat] = bbox;
+    const ringTouches = (coords) => {
+      for (const c of coords) {
+        if (Array.isArray(c[0])) {
+          if (ringTouches(c)) return true;
+        } else {
+          const [lon, lat] = c;
+          if (lon >= minLon && lon <= maxLon && lat >= minLat && lat <= maxLat)
+            return true;
+        }
+      }
+      return false;
+    };
+    if (g.type === "Polygon" || g.type === "MultiPolygon") {
+      return ringTouches(g.coordinates);
+    }
+    return false;
+  }
+
+  function addPoaNets(bbox) {
+    if (!window.L || !leafletMap || !poaNetsGeo) return 0;
+    if (poaNetsLayer) {
+      leafletMap.removeLayer(poaNetsLayer);
+      poaNetsLayer = null;
+    }
+    if (!mapLayerPrefs.poa) return 0;
+
+    const features = (poaNetsGeo.features || []).filter((f) =>
+      featureIntersectsBbox(f, bbox),
+    );
+    if (!features.length) return 0;
+
+    if (!leafletMap.getPane("poaPane")) {
+      leafletMap.createPane("poaPane");
+      leafletMap.getPane("poaPane").style.zIndex = 450;
+    }
+
+    poaNetsLayer = L.geoJSON(
+      { type: "FeatureCollection", features },
+      {
+        pane: "poaPane",
+        style: {
+          color: "#2f6fed",
+          weight: 1.4,
+          fillColor: "#2f6fed",
+          fillOpacity: 0.08,
+        },
+        onEachFeature(feature, layer) {
+          const p = feature.properties || {};
+          const net = p.net || "—";
+          const area =
+            locale === "zh" ? p.areaZh || p.areaEn : p.areaEn || p.areaZh;
+          layer.bindPopup(
+            `<div class="school-popup"><div class="school-popup-kicker">${t(
+              "layerPoaNets",
+            )}</div><strong>${net}</strong>${
+              area ? `<div class="school-popup-alt">${area}</div>` : ""
+            }</div>`,
+            { className: "school-popup-wrap", maxWidth: 280 },
+          );
+        },
+      },
+    ).addTo(leafletMap);
+    return features.length;
+  }
+
+  function refreshOptionalLayers() {
+    if (!leafletMap || !activeDistrictBbox) return;
+    const parts = [];
+    const mtrCount = addMtrMarkers(activeDistrictBbox);
+    if (mtrCount) parts.push(t("mtrLoaded")(mtrCount));
+    setMidlandOverlay(mapLayerPrefs.midland);
+    if (mapLayerPrefs.midland) parts.push(t("midlandOverlayNote"));
+    const primaryCount = addSchoolLayer("PRIMARY", activeDistrictBbox);
+    if (primaryCount) parts.push(t("schoolsLoaded")(primaryCount, "PRIMARY"));
+    const secondaryCount = addSchoolLayer("SECONDARY", activeDistrictBbox);
+    if (secondaryCount)
+      parts.push(t("schoolsLoaded")(secondaryCount, "SECONDARY"));
+    const poaCount = addPoaNets(activeDistrictBbox);
+    if (poaCount) parts.push(t("poaLoaded")(poaCount));
+    return parts;
+  }
+
+  function syncLayerToggleUi() {
+    const midland = $("#toggle-midland-mtr");
+    const mtr = $("#toggle-mtr-stations");
+    const primary = $("#toggle-primary-schools");
+    const secondary = $("#toggle-secondary-schools");
+    const poa = $("#toggle-poa-nets");
+    if (midland) midland.checked = mapLayerPrefs.midland;
+    if (mtr) mtr.checked = mapLayerPrefs.mtr;
+    if (primary) primary.checked = mapLayerPrefs.primary;
+    if (secondary) secondary.checked = mapLayerPrefs.secondary;
+    if (poa) poa.checked = mapLayerPrefs.poa;
+    const radio = document.querySelector(
+      `input[name="basemap"][value="${mapLayerPrefs.basemap}"]`,
+    );
+    if (radio) radio.checked = true;
+  }
+
   async function loadDistrictMap(dcName) {
     const meta = districtsMeta?.districts?.[dcName];
     const mapEl = $("#district-leaflet");
     const buildingsMeta = $("#buildings-meta");
     clearBuildingPanel();
     buildingsMeta.textContent = t("buildingsLoading");
+    syncLayerToggleUi();
 
     if (!window.L || !meta) {
       buildingsMeta.textContent = t("buildingsError")("map unavailable");
@@ -835,21 +1161,20 @@
       leafletMap = null;
       leafletLayers = null;
       selectedBuildingLayer = null;
+      basemapLayer = null;
+      mtrLayerGroup = null;
+      midlandOverlay = null;
+      primarySchoolLayer = null;
+      secondarySchoolLayer = null;
+      poaNetsLayer = null;
     }
 
     const [minLon, minLat, maxLon, maxLat] = meta.bbox;
+    activeDistrictBbox = meta.bbox;
     leafletMap = L.map(mapEl, { scrollWheelZoom: true });
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> · &copy; CARTO · buildings: CSDI LandsD · MTR: CSDI + MTR Corp',
-      subdomains: "abcd",
-      maxZoom: 19,
-    }).addTo(leafletMap);
+    setBasemap(mapLayerPrefs.basemap);
 
-    const bounds = L.latLngBounds(
-      [minLat, minLon],
-      [maxLat, maxLon],
-    );
+    const bounds = L.latLngBounds([minLat, minLon], [maxLat, maxLon]);
     leafletMap.fitBounds(bounds, { padding: [16, 16] });
 
     if (districtsGeo) {
@@ -868,7 +1193,6 @@
       }
     }
 
-    let mtrCount = 0;
     try {
       const res = await fetch(
         `/api/buildings?bbox=${meta.bbox.join(",")}&limit=700`,
@@ -907,8 +1231,6 @@
         },
       }).addTo(leafletMap);
 
-      mtrCount = addMtrMarkers(meta.bbox);
-
       buildingsMeta.textContent = t("buildingsLoaded")(
         payload.count,
         payload.namedOnly,
@@ -917,15 +1239,13 @@
         buildingsMeta.textContent +=
           locale === "zh" ? "（已截斷）" : " (truncated)";
       }
-      if (mtrCount) {
-        buildingsMeta.textContent += ` · ${t("mtrLoaded")(mtrCount)}`;
-      }
     } catch (err) {
       buildingsMeta.textContent = t("buildingsError")(err.message);
-      mtrCount = addMtrMarkers(meta.bbox);
-      if (mtrCount) {
-        buildingsMeta.textContent += ` · ${t("mtrLoaded")(mtrCount)}`;
-      }
+    }
+
+    const extras = refreshOptionalLayers() || [];
+    if (extras.length) {
+      buildingsMeta.textContent += ` · ${extras.join(" · ")}`;
     }
 
     setTimeout(() => leafletMap?.invalidateSize(), 80);
@@ -1149,24 +1469,52 @@
   }
 
   async function loadMapData() {
-    if (mapData && districtsMeta && districtsGeo && mtrStationsGeo) {
-      return { mapData, districtsMeta, districtsGeo, mtrStationsGeo };
+    if (
+      mapData &&
+      districtsMeta &&
+      districtsGeo &&
+      mtrStationsGeo &&
+      schoolsGeo &&
+      poaNetsGeo
+    ) {
+      return {
+        mapData,
+        districtsMeta,
+        districtsGeo,
+        mtrStationsGeo,
+        schoolsGeo,
+        poaNetsGeo,
+      };
     }
-    const [pathsRes, metaRes, geoRes, mtrRes] = await Promise.all([
-      fetch("/hk-districts-paths.json"),
-      fetch("/hk-districts-meta.json"),
-      fetch("/hk-districts.geojson"),
-      fetch("/mtr-stations.geojson"),
-    ]);
+    const [pathsRes, metaRes, geoRes, mtrRes, schoolsRes, poaRes] =
+      await Promise.all([
+        fetch("/hk-districts-paths.json"),
+        fetch("/hk-districts-meta.json"),
+        fetch("/hk-districts.geojson"),
+        fetch("/mtr-stations.geojson"),
+        fetch("/schools.geojson"),
+        fetch("/poa-nets.geojson"),
+      ]);
     if (!pathsRes.ok) throw new Error(`Map HTTP ${pathsRes.status}`);
     if (!metaRes.ok) throw new Error(`Meta HTTP ${metaRes.status}`);
     if (!geoRes.ok) throw new Error(`Geo HTTP ${geoRes.status}`);
     if (!mtrRes.ok) throw new Error(`MTR HTTP ${mtrRes.status}`);
+    if (!schoolsRes.ok) throw new Error(`Schools HTTP ${schoolsRes.status}`);
+    if (!poaRes.ok) throw new Error(`POA HTTP ${poaRes.status}`);
     mapData = await pathsRes.json();
     districtsMeta = await metaRes.json();
     districtsGeo = await geoRes.json();
     mtrStationsGeo = await mtrRes.json();
-    return { mapData, districtsMeta, districtsGeo, mtrStationsGeo };
+    schoolsGeo = await schoolsRes.json();
+    poaNetsGeo = await poaRes.json();
+    return {
+      mapData,
+      districtsMeta,
+      districtsGeo,
+      mtrStationsGeo,
+      schoolsGeo,
+      poaNetsGeo,
+    };
   }
 
   async function load() {
@@ -1191,6 +1539,49 @@
   });
 
   $("#detail-back")?.addEventListener("click", () => closeDistrict());
+
+  document.querySelectorAll('input[name="basemap"]').forEach((el) => {
+    el.addEventListener("change", () => {
+      if (!el.checked) return;
+      setBasemap(el.value);
+    });
+  });
+
+  $("#toggle-midland-mtr")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.midland = Boolean(evt.target.checked);
+    if (!leafletMap || !activeDistrictBbox) return;
+    setMidlandOverlay(mapLayerPrefs.midland);
+    const metaEl = $("#buildings-meta");
+    if (metaEl && mapLayerPrefs.midland) {
+      if (!metaEl.textContent.includes(t("midlandOverlayNote"))) {
+        metaEl.textContent += ` · ${t("midlandOverlayNote")}`;
+      }
+    }
+  });
+
+  $("#toggle-mtr-stations")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.mtr = Boolean(evt.target.checked);
+    if (!leafletMap || !activeDistrictBbox) return;
+    addMtrMarkers(activeDistrictBbox);
+  });
+
+  $("#toggle-primary-schools")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.primary = Boolean(evt.target.checked);
+    if (!leafletMap || !activeDistrictBbox) return;
+    addSchoolLayer("PRIMARY", activeDistrictBbox);
+  });
+
+  $("#toggle-secondary-schools")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.secondary = Boolean(evt.target.checked);
+    if (!leafletMap || !activeDistrictBbox) return;
+    addSchoolLayer("SECONDARY", activeDistrictBbox);
+  });
+
+  $("#toggle-poa-nets")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.poa = Boolean(evt.target.checked);
+    if (!leafletMap || !activeDistrictBbox) return;
+    addPoaNets(activeDistrictBbox);
+  });
 
   applyI18n();
   load();

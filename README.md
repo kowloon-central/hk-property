@@ -6,6 +6,7 @@ Cloudflare Worker dashboard for official Hong Kong property stats:
 - **Land Registry** monthly ASP counts by published district / region
 - **District drill-down**: CSDI LandsD building footprints + bilingual names, storeys, heights
 - **MTR stations**: static GeoJSON (CSDI `mtr_venue_polygon` centroids ⋈ MTR Corp bilingual CSV) as Leaflet markers on district drill-down
+- **Map layer toggles** (district drill-down): CARTO ↔ OpenStreetMap basemap, Midland MTR schematic image overlay (Worker-proxied), EDB primary/secondary school locations, POA primary school-net polygons
 
 Bilingual UI: default **繁體中文**, toggle **English ↔ 繁體**. Preference persisted in `localStorage` (`hkp-lang`).
 
@@ -19,7 +20,7 @@ Live URL:
 
 - Cloudflare Workers + static assets (`public/`)
 - TypeScript fetchers for RVD CSV + Land Registry JSON + CSDI ArcGIS building query
-- Chart.js charts + SimpleMaps district choropleth (overview) + Leaflet building map with MTR markers (drill-down)
+- Chart.js charts + SimpleMaps district choropleth (overview) + Leaflet building map with MTR / schools / overlays (drill-down)
 
 ## Setup & deploy
 
@@ -45,6 +46,7 @@ npm run dev
 | `GET /api/market` | Indices, regional series, ASP, data notes |
 | `GET /api/asp-history?id=sha-tin&months=18` | Monthly ASP history for a Land Registry region id |
 | `GET /api/buildings?bbox=minLon,minLat,maxLon,maxLat&limit=700` | CSDI building footprints (named preferred) |
+| `GET /api/proxy/midland-mtr.png` | Proxied Midland MTR schematic PNG (CORS + cache) |
 
 ## What is live vs placeholder
 
@@ -60,12 +62,20 @@ npm run dev
 | Drill-down district polygons | Derived from [hupili/geohk](https://github.com/hupili/geohk) DC land GeoJSON (census-era DC boundaries; approximate match to today’s 18 districts) |
 | Building footprints + names / storeys / heights | Lands Department **Building** layer via [CSDI](https://portal.csdi.gov.hk/) / data.gov.hk |
 | MTR station markers (bilingual + line codes) | Static `public/mtr-stations.geojson` — CSDI LandsD `mtr_venue_polygon` centroids joined to [MTR Corp](https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv) open data (interchanges aggregated; Light Rail excluded) |
+| OpenStreetMap basemap toggle | Official `tile.openstreetmap.org` tiles with OSM attribution (vs default CARTO) |
+| Midland MTR schematic overlay | Proxied PNG image overlay; **schematic**, not geographic — see `docs/midland-mtr-overlay.md` |
+| Primary / secondary school markers | Static `public/schools.geojson` from EDB [School Location and Information](http://www.edb.gov.hk/attachment/en/student-parents/sch-info/sch-search/sch-location-info/SCH_LOC_EDB.csv) |
+| POA primary school-net polygons | Static `public/poa-nets.geojson` from Esri China (HK) layer derived from EDB POA nets |
 
-Refresh the MTR snapshot:
+Refresh snapshots:
 
 ```bash
 npm run build:mtr
+npm run build:schools   # needs tmp/SCH_LOC_EDB.csv
+npm run build:poa       # needs tmp/poa-nets.geojson from Esri FeatureServer
 ```
+
+**Band 1 / 2 / 3 limitation:** EDB does **not** publish school Band polygons. “Band” in SSPA refers to **student** allocation groups (territory / net thirds), not official school rankings. The UI therefore shows school locations + POA nets and states this clearly (EN / 繁體).
 
 ### Placeholder (intentionally not scraped)
 
@@ -74,6 +84,7 @@ npm run build:mtr
 | Per-building **rent listing** | UI shows “not wired yet” — no Midland / Centaline / 28Hse scrape |
 | Per-building **asking price** | Same |
 | Exact 18-way ASP for Island / Kowloon DCs | Land Registry publishes Island & Kowloon aggregates only; Island/Kowloon DCs share that ASP series |
+| Official school **Band 1/2/3** polygons | Not openly available from EDB |
 
 ## Data sources (URLs)
 
@@ -88,6 +99,9 @@ npm run build:mtr
 | CSDI buildings (ArcGIS query) | `landsd_rcd_1637211194312_35158` MapServer/0 |
 | CSDI MTR venue polygons (WFS) | `https://mapapi.hkmapservice.gov.hk/ogc/wfs/indoor/mtr_venue_polygon` |
 | MTR lines & stations CSV | https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv |
+| EDB school locations | http://www.edb.gov.hk/attachment/en/student-parents/sch-info/sch-search/sch-location-info/SCH_LOC_EDB.csv |
+| EDB POA school-net list | https://www.edb.gov.hk/attachment/datagovhk/POA_SchoolNet_EN.csv |
+| Midland MTR schematic PNG | https://res-cms.midland.com.hk/property-news/wp-content/uploads/2024/08/P130824-MTR.png |
 
 ## Repo
 
