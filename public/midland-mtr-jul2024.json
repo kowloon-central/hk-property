@@ -8,12 +8,15 @@
     "attribution": "Land Registry registrations aggregated by Midland Realty Research Centre; values digitized from Midland chart P130824-MTR (Aug 2024) for July 2024 registrations. One representative estate per station — not a true station-wide average.",
     "attributionZh": "土地註冊處登記、美聯物業研究中心彙整；數值由美聯圖表 P130824-MTR（2024年8月刊、反映2024年7月註冊）人手數位化。每站一個代表屋苑，並非站區全面平均。",
     "notes": [
+      "avgPsf is absolute 平均實用呎價 in HK$/sq ft as printed on the Midland chart (e.g. 14400 → $14,400). Primary map label.",
       "MoM price % marked # on the chart means Midland flagged the change as not applicable (thin/quality-skewed sample).",
       "dealsDeltaPrevZero=true means chart showed 上月0宗 (no MoM % for volume).",
+      "avgPsf null with deals 0 means the chart showed 0 registrations (no average).",
       "Stations absent from this file were not on the Midland 75-estate chart.",
       "Open machine-readable station MoM series was not available; this digitization is the product data layer. The Midland PNG is a reference only — not a live map overlay."
     ],
-    "digitizedAt": "2026-11-24"
+    "digitizedAt": "2026-11-24",
+    "verifiedAgainstChartAt": "2026-11-25"
   },
   "stations": {
     "TUM": {

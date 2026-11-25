@@ -61,7 +61,7 @@ npm run dev
 | Building footprints + names / storeys / heights | Lands Department **Building** layer via [CSDI](https://portal.csdi.gov.hk/) / data.gov.hk |
 | MTR station markers (bilingual + line codes) | Static `public/mtr-stations.geojson` — CSDI LandsD `mtr_venue_polygon` centroids joined to [MTR Corp](https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv) open data (interchanges aggregated; Light Rail excluded) |
 | OpenStreetMap basemap toggle | Official `tile.openstreetmap.org` tiles with OSM attribution (vs default CARTO) |
-| Midland MTR price Δ (Jul 2024) | Digitized JSON `public/midland-mtr-jul2024.json` joined to MTR markers (green/red/% labels). Midland PNG is a **data reference only** — see `docs/midland-mtr-overlay.md` |
+| Midland avg $/sq ft (Jul 2024) | Digitized JSON `public/midland-mtr-jul2024.json` joined to MTR markers (labels show **平均呎價**; MoM % is secondary in popups / mild dot colour). Midland PNG is a **data reference only** — see `docs/midland-mtr-overlay.md` |
 | Primary / secondary school markers | Static `public/schools.geojson` from EDB [School Location and Information](http://www.edb.gov.hk/attachment/en/student-parents/sch-info/sch-search/sch-location-info/SCH_LOC_EDB.csv) |
 | POA primary school-net polygons | Static `public/poa-nets.geojson` from Esri China (HK) layer derived from EDB POA nets |
 

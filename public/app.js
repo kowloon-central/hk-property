@@ -31,7 +31,7 @@
       layerBasemap: "Basemap",
       layerCarto: "CARTO",
       layerOsm: "OpenStreetMap",
-      layerMidlandMtr: "Midland MTR Δ",
+      layerMidlandMtr: "Midland avg $/sq ft",
       layerMtrStations: "MTR stations",
       layerPrimarySchools: "Primary schools",
       layerSecondarySchools: "Secondary schools",
@@ -48,12 +48,13 @@
         } · EDB`,
       poaLoaded: (n) => `${n} POA net${n === 1 ? "" : "s"} in view`,
       midlandOverlayNote:
-        "Midland Jul 2024 railway-estate MoM psf (digitized; one estate/station)",
+        "Midland Jul 2024 railway-estate avg $/sq ft (digitized; one estate/station)",
       midlandEstate: "Estate",
-      midlandPsf: "Avg psf",
+      midlandPsf: "Avg $/sq ft",
       midlandPriceDelta: "MoM price",
       midlandDeals: "Registrations",
       midlandNoDelta: "No MoM %",
+      midlandNoPsf: "No avg $/sq ft",
       midlandSource: "Source: Midland Realty / Land Registry (Jul 2024)",
       provisional: "provisional",
       asOf: (d, ym) =>
@@ -69,7 +70,7 @@
         "RVD regional average price/rent series for the parent region, plus Land Registry ASP counts for the matching published area.",
       detailMapTitle: "Building map",
       detailMapLede:
-        "CSDI LandsD building footprints plus MTR station markers. Select a building for name and rent/asking status. Toggle basemap, Midland Jul 2024 price deltas on stations, and schools / POA nets.",
+        "CSDI LandsD building footprints plus MTR station markers. Select a building for name and rent/asking status. Toggle basemap, Midland Jul 2024 avg $/sq ft on stations, and schools / POA nets.",
       buildingPick: "Select a building",
       attrStoreys: "Storeys",
       attrType: "Type",
@@ -133,7 +134,7 @@
       layerBasemap: "底圖",
       layerCarto: "CARTO",
       layerOsm: "OpenStreetMap",
-      layerMidlandMtr: "美聯港鐵升跌",
+      layerMidlandMtr: "美聯平均呎價",
       layerMtrStations: "港鐵站",
       layerPrimarySchools: "小學",
       layerSecondarySchools: "中學",
@@ -148,12 +149,13 @@
         `範圍內 ${n} 所${level === "PRIMARY" ? "小學" : "中學"} · 教育局`,
       poaLoaded: (n) => `範圍內 ${n} 個小一校網`,
       midlandOverlayNote:
-        "美聯 2024年7月鐵路盤呎價按月升跌（數位化；每站代表屋苑）",
+        "美聯 2024年7月鐵路盤平均呎價（數位化；每站代表屋苑）",
       midlandEstate: "屋苑",
       midlandPsf: "平均呎價",
       midlandPriceDelta: "呎價按月",
       midlandDeals: "註冊宗數",
       midlandNoDelta: "無按月升跌％",
+      midlandNoPsf: "無平均呎價",
       midlandSource: "來源：美聯物業／土地註冊處（2024年7月）",
       provisional: "臨時",
       asOf: (d, ym) =>
@@ -169,7 +171,7 @@
         "差估署所屬大區平均售價／租金數列，以及土地註冊處該買賣合約分區宗數。",
       detailMapTitle: "樓宇地圖",
       detailMapLede:
-        "CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。可用圖層切換底圖、美聯 2024年7月港鐵升跌標記及學校／校網。",
+        "CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。可用圖層切換底圖、美聯 2024年7月平均呎價標記及學校／校網。",
       buildingPick: "選擇樓宇",
       attrStoreys: "層數",
       attrType: "類型",
@@ -856,11 +858,47 @@
     return `${n}%`;
   }
 
+  /** Midland chart style absolute $/sq ft (e.g. $14,400). */
+  function formatMidlandPsfFull(n) {
+    if (n == null || !Number.isFinite(n)) return null;
+    return `$${Number(n).toLocaleString("en-HK")}`;
+  }
+
+  /** Compact marker label: 萬 in zh (≥1萬), else Midland $X,XXX; en uses $X.Xk. */
+  function formatMidlandPsfMarker(n) {
+    if (n == null || !Number.isFinite(n)) return null;
+    if (locale === "zh") {
+      if (n >= 10000) {
+        const wan = n / 10000;
+        const digits = wan >= 10 ? 1 : 2;
+        return `${wan.toFixed(digits)}萬`;
+      }
+      return `$${Number(n).toLocaleString("en-HK")}`;
+    }
+    return `$${(n / 1000).toFixed(1)}k`;
+  }
+
+  function midlandDeltaDir(mid) {
+    if (!mid || mid.priceDeltaPct == null) return "na";
+    if (mid.priceDeltaPct > 0) return "up";
+    if (mid.priceDeltaPct < 0) return "down";
+    return "flat";
+  }
+
   function midlandMarkerFill(mid) {
-    if (!mid || mid.priceDeltaPct == null) return "#8a96a0";
-    if (mid.priceDeltaPct > 0) return "#1f7a5c";
-    if (mid.priceDeltaPct < 0) return "#b33a3a";
-    return "#c9832a";
+    // Mild MoM cue on fill when delta exists; otherwise price-band tint.
+    if (!mid) return "#8a96a0";
+    if (mid.priceDeltaPct != null) {
+      if (mid.priceDeltaPct > 0) return "#1f7a5c";
+      if (mid.priceDeltaPct < 0) return "#b33a3a";
+      return "#c9832a";
+    }
+    const psf = mid.avgPsf;
+    if (psf == null) return "#8a96a0";
+    if (psf >= 20000) return "#6b2d5c";
+    if (psf >= 15000) return "#c9832a";
+    if (psf >= 12000) return "#2a7a8c";
+    return "#3d6b5c";
   }
 
   function mtrPopupHtml(props) {
@@ -892,10 +930,7 @@
           : mid.priceDeltaFlag
             ? mid.priceDeltaFlag
             : t("midlandNoDelta");
-      const psf =
-        mid.avgPsf != null
-          ? `$${Number(mid.avgPsf).toLocaleString("en-HK")}`
-          : "—";
+      const psf = formatMidlandPsfFull(mid.avgPsf) || t("midlandNoPsf");
       const deals =
         mid.deals != null
           ? mid.dealsDeltaPct != null
@@ -908,12 +943,12 @@
           : "—";
       midlandBlock = `<div class="mtr-popup-midland">
         <div class="mtr-popup-label">${t("midlandSource")}</div>
+        <div class="mtr-popup-mid-row mtr-popup-mid-lead"><span>${t(
+          "midlandPsf",
+        )}</span><strong>${psf}</strong></div>
         <div class="mtr-popup-mid-row"><span>${t(
           "midlandEstate",
         )}</span><strong>${estate || "—"}</strong></div>
-        <div class="mtr-popup-mid-row"><span>${t(
-          "midlandPsf",
-        )}</span><strong>${psf}</strong></div>
         <div class="mtr-popup-mid-row"><span>${t(
           "midlandPriceDelta",
         )}</span><strong class="mtr-delta-text">${delta}</strong></div>
@@ -988,17 +1023,17 @@
       const latlng = L.latLng(coords[1], coords[0]);
       const mid = feature.properties?.midland;
       let layer;
-      if (showDeltas && mid && mid.priceDeltaPct != null) {
-        const label = formatSignedPct(mid.priceDeltaPct);
-        const dir =
-          mid.priceDeltaPct > 0 ? "up" : mid.priceDeltaPct < 0 ? "down" : "flat";
+      const psfLabel =
+        showDeltas && mid ? formatMidlandPsfMarker(mid.avgPsf) : null;
+      if (psfLabel) {
+        const dir = midlandDeltaDir(mid);
         layer = L.marker(latlng, {
           pane: "mtrPane",
           icon: L.divIcon({
             className: "mtr-delta-icon",
-            html: `<div class="mtr-delta-marker mtr-delta-${dir}"><span class="mtr-delta-dot"></span><span class="mtr-delta-pct">${label}</span></div>`,
-            iconSize: [52, 20],
-            iconAnchor: [10, 10],
+            html: `<div class="mtr-delta-marker mtr-delta-${dir}"><span class="mtr-delta-dot"></span><span class="mtr-delta-pct">${psfLabel}</span></div>`,
+            iconSize: [68, 22],
+            iconAnchor: [12, 11],
           }),
         });
       } else {
