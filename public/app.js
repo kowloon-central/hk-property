@@ -3,9 +3,6 @@
     en: {
       brand: "HK Property",
       byline: "by Patrick Lau",
-      heroTitle: "Official sold prices, rents & deals",
-      heroLede:
-        "Monthly RVD indices and Land Registry ASP counts — bilingual district dashboard. Click a district for building footprints and history.",
       kpiPrice: "Price index",
       kpiRent: "Rent index",
       kpiAsp: "ASP residential",
@@ -26,11 +23,8 @@
       colRentB: "Rent B",
       colRentC: "Rent C",
       footerSources:
-        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk), Land Registry monthly ASP statistics, Lands Department CSDI building footprints, MTR station points (CSDI mtr_venue_polygon centroids + MTR Corporation Limited bilingual open data), EDB school locations (data.gov.hk), Esri China (HK) POA school-net boundaries (EDB-derived), OpenStreetMap contributors, CARTO basemap, and Midland Realty July 2024 railway-estate snapshot (digitized values; Midland cited as source — PNG not used as a live overlay). EDB does not publish school Band 1/2/3 polygons — bands apply to students. Figures may be provisional. Building rent/asking listing feeds are not wired. Overview outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0).",
+        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk), Land Registry monthly ASP statistics, Lands Department CSDI building footprints, MTR station points (CSDI mtr_venue_polygon centroids + MTR Corporation Limited bilingual open data), EDB school locations (data.gov.hk), Esri China (HK) POA school-net boundaries (EDB-derived), OpenStreetMap contributors, and Midland Realty July 2024 railway-estate snapshot (digitized values; Midland cited as source — PNG not used as a live overlay). EDB does not publish school Band 1/2/3 polygons — bands apply to students. Figures may be provisional. Building rent/asking listing feeds are not wired. Overview outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0). Basemap: OpenStreetMap.",
       footerHost: "Cloudflare Worker",
-      layerBasemap: "Basemap",
-      layerCarto: "CARTO",
-      layerOsm: "OpenStreetMap",
       layerMidlandMtr: "Midland avg $/sq ft",
       layerMtrStations: "MTR stations",
       layerPrimarySchools: "Primary schools",
@@ -68,9 +62,6 @@
       detailHistoryTitle: "District history",
       detailHistoryLede:
         "RVD regional average price/rent series for the parent region, plus Land Registry ASP counts for the matching published area.",
-      detailMapTitle: "Building map",
-      detailMapLede:
-        "CSDI LandsD building footprints plus MTR station markers. Select a building for name and rent/asking status. Toggle basemap, Midland Jul 2024 avg $/sq ft on stations, and schools / POA nets.",
       buildingPick: "Select a building",
       attrStoreys: "Storeys",
       attrType: "Type",
@@ -107,9 +98,6 @@
     zh: {
       brand: "香港樓市",
       byline: "Patrick Lau",
-      heroTitle: "官方成交價、租金與買賣合約",
-      heroLede:
-        "差餉物業估價署按月指數與土地註冊處買賣合約宗數 — 中英對照地區儀表板。點選分區可深入樓宇地圖與歷史數列。",
       kpiPrice: "售價指數",
       kpiRent: "租金指數",
       kpiAsp: "住宅買賣合約",
@@ -129,11 +117,8 @@
       colRentB: "租金 B",
       colRentC: "租金 C",
       footerSources:
-        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計、地政總署 CSDI 建築物範圍、港鐵站點（CSDI mtr_venue_polygon 形心 + 香港鐵路有限公司雙語開放數據）、教育局學校位置（data.gov.hk）、Esri China (HK) 小一入學校網界線（源自教育局）、OpenStreetMap 貢獻者、CARTO 底圖，以及美聯物業 2024年7月鐵路盤快照（人手數位化數值；美聯為出處——PNG 不作產品疊圖）。教育局並無公布學校 Band 1／2／3 圖層——Band 用於學生派位。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。總覽界線：SimpleMaps 香港行政區（CC-BY-4.0）。",
+        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計、地政總署 CSDI 建築物範圍、港鐵站點（CSDI mtr_venue_polygon 形心 + 香港鐵路有限公司雙語開放數據）、教育局學校位置（data.gov.hk）、Esri China (HK) 小一入學校網界線（源自教育局）、OpenStreetMap 貢獻者，以及美聯物業 2024年7月鐵路盤快照（人手數位化數值；美聯為出處——PNG 不作產品疊圖）。教育局並無公布學校 Band 1／2／3 圖層——Band 用於學生派位。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。總覽界線：SimpleMaps 香港行政區（CC-BY-4.0）。底圖：OpenStreetMap。",
       footerHost: "Cloudflare Worker",
-      layerBasemap: "底圖",
-      layerCarto: "CARTO",
-      layerOsm: "OpenStreetMap",
       layerMidlandMtr: "美聯平均呎價",
       layerMtrStations: "港鐵站",
       layerPrimarySchools: "小學",
@@ -169,9 +154,6 @@
       detailHistoryTitle: "地區歷史",
       detailHistoryLede:
         "差估署所屬大區平均售價／租金數列，以及土地註冊處該買賣合約分區宗數。",
-      detailMapTitle: "樓宇地圖",
-      detailMapLede:
-        "CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。可用圖層切換底圖、美聯 2024年7月平均呎價標記及學校／校網。",
       buildingPick: "選擇樓宇",
       attrStoreys: "層數",
       attrType: "類型",
@@ -298,7 +280,6 @@
   let poaNetsLayer = null;
   let activeDistrictBbox = null;
   let mapLayerPrefs = {
-    basemap: "carto",
     midland: false,
     mtr: true,
     primary: false,
@@ -306,23 +287,12 @@
     poa: false,
   };
 
-  const BASEMAPS = {
-    carto: {
-      url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-      options: {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · &copy; <a href="https://carto.com/attributions">CARTO</a> · buildings: CSDI LandsD · MTR: CSDI + MTR Corp · schools: EDB · Midland Jul 2024 railway-estate Δ: Midland Realty',
-        subdomains: "abcd",
-        maxZoom: 19,
-      },
-    },
-    osm: {
-      url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      options: {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · buildings: CSDI LandsD · MTR: CSDI + MTR Corp · schools: EDB · Midland Jul 2024 railway-estate Δ: Midland Realty',
-        maxZoom: 19,
-      },
+  const OSM_BASEMAP = {
+    url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    options: {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · buildings: CSDI LandsD · MTR: CSDI + MTR Corp · schools: EDB · Midland Jul 2024 railway-estate Δ: Midland Realty',
+      maxZoom: 19,
     },
   };
 
@@ -972,20 +942,15 @@
     </div>`;
   }
 
-  function setBasemap(kind) {
+  function setBasemap() {
     if (!window.L || !leafletMap) return;
-    const key = kind === "osm" ? "osm" : "carto";
-    mapLayerPrefs.basemap = key;
-    const cfg = BASEMAPS[key];
     if (basemapLayer) {
       leafletMap.removeLayer(basemapLayer);
       basemapLayer = null;
     }
-    basemapLayer = L.tileLayer(cfg.url, cfg.options).addTo(leafletMap);
-    const radio = document.querySelector(
-      `input[name="basemap"][value="${key}"]`,
+    basemapLayer = L.tileLayer(OSM_BASEMAP.url, OSM_BASEMAP.options).addTo(
+      leafletMap,
     );
-    if (radio) radio.checked = true;
   }
 
   function addMtrMarkers(bbox) {
@@ -1240,10 +1205,6 @@
     if (primary) primary.checked = mapLayerPrefs.primary;
     if (secondary) secondary.checked = mapLayerPrefs.secondary;
     if (poa) poa.checked = mapLayerPrefs.poa;
-    const radio = document.querySelector(
-      `input[name="basemap"][value="${mapLayerPrefs.basemap}"]`,
-    );
-    if (radio) radio.checked = true;
   }
 
   async function loadDistrictMap(dcName) {
@@ -1274,7 +1235,7 @@
     const [minLon, minLat, maxLon, maxLat] = meta.bbox;
     activeDistrictBbox = meta.bbox;
     leafletMap = L.map(mapEl, { scrollWheelZoom: true });
-    setBasemap(mapLayerPrefs.basemap);
+    setBasemap();
 
     const bounds = L.latLngBounds([minLat, minLon], [maxLat, maxLon]);
     leafletMap.fitBounds(bounds, { padding: [16, 16] });
@@ -1647,13 +1608,6 @@
   });
 
   $("#detail-back")?.addEventListener("click", () => closeDistrict());
-
-  document.querySelectorAll('input[name="basemap"]').forEach((el) => {
-    el.addEventListener("change", () => {
-      if (!el.checked) return;
-      setBasemap(el.value);
-    });
-  });
 
   $("#toggle-midland-mtr")?.addEventListener("change", (evt) => {
     mapLayerPrefs.midland = Boolean(evt.target.checked);

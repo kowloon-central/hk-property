@@ -52,58 +52,13 @@
     </header>
 
     <main id="overview">
-      <section class="hero">
-        <h1 data-i18n="heroTitle">官方成交價、租金與買賣合約</h1>
-        <p class="lede" data-i18n="heroLede">
-          差餉物業估價署按月指數與土地註冊處買賣合約宗數 — 中英對照地區儀表板。點選分區可深入樓宇地圖與歷史數列。
-        </p>
-        <p class="meta" id="as-of" data-i18n-keep></p>
-      </section>
-
-      <section class="kpis" aria-label="Key figures">
-        <article class="kpi">
-          <h2 data-i18n="kpiPrice">售價指數</h2>
-          <p class="kpi-value" id="kpi-price">—</p>
-          <p class="kpi-sub" id="kpi-price-sub"></p>
-        </article>
-        <article class="kpi">
-          <h2 data-i18n="kpiRent">租金指數</h2>
-          <p class="kpi-value" id="kpi-rent">—</p>
-          <p class="kpi-sub" id="kpi-rent-sub"></p>
-        </article>
-        <article class="kpi">
-          <h2 data-i18n="kpiAsp">住宅買賣合約</h2>
-          <p class="kpi-value" id="kpi-asp">—</p>
-          <p class="kpi-sub" id="kpi-asp-sub"></p>
-        </article>
-        <article class="kpi">
-          <h2 data-i18n="kpiPrimary">一手 / 二手</h2>
-          <p class="kpi-value" id="kpi-split">—</p>
-          <p class="kpi-sub" id="kpi-split-sub"></p>
-        </article>
-      </section>
-
-      <section class="panel charts" aria-label="Index charts">
-        <div class="panel-head">
-          <h2 data-i18n="chartsTitle">私人住宅指數</h2>
-          <p data-i18n="chartsLede">全港差估署按月數列（最近 60 個月）。</p>
-        </div>
-        <div class="chart-grid">
-          <div class="chart-wrap">
-            <canvas id="price-chart" height="220"></canvas>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="rent-chart" height="220"></canvas>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel map-panel" aria-label="District ASP">
-        <div class="panel-head">
-          <h2 data-i18n="mapTitle">分區買賣合約</h2>
-          <p data-i18n="mapLede">
+      <section class="map-hero" aria-label="District ASP">
+        <div class="map-hero-copy">
+          <h1 data-i18n="mapTitle">分區買賣合約</h1>
+          <p class="lede" data-i18n="mapLede">
             土地註冊處樓宇單位買賣合約宗數。點選分區開啟樓宇地圖與歷史。
           </p>
+          <p class="meta" id="as-of" data-i18n-keep></p>
         </div>
         <div class="map-layout">
           <div
@@ -116,29 +71,69 @@
         </div>
       </section>
 
-      <section class="panel regions" aria-label="Regional averages">
-        <div class="panel-head">
-          <h2 data-i18n="regionTitle">分區平均售價與租金</h2>
-          <p data-i18n="regionLede">
-            差估署最新按月 A–C 類私人住宅平均數（港元／平方米）。
-          </p>
-        </div>
-        <div class="table-wrap">
-          <table id="region-table">
-            <thead>
-              <tr>
-                <th data-i18n="colRegion">地區</th>
-                <th data-i18n="colPriceA">售價 A</th>
-                <th data-i18n="colPriceB">售價 B</th>
-                <th data-i18n="colPriceC">售價 C</th>
-                <th data-i18n="colRentA">租金 A</th>
-                <th data-i18n="colRentB">租金 B</th>
-                <th data-i18n="colRentC">租金 C</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+      <section class="secondary-stack" aria-label="Market figures">
+        <section class="kpis" aria-label="Key figures">
+          <article class="kpi">
+            <h2 data-i18n="kpiPrice">售價指數</h2>
+            <p class="kpi-value" id="kpi-price">—</p>
+            <p class="kpi-sub" id="kpi-price-sub"></p>
+          </article>
+          <article class="kpi">
+            <h2 data-i18n="kpiRent">租金指數</h2>
+            <p class="kpi-value" id="kpi-rent">—</p>
+            <p class="kpi-sub" id="kpi-rent-sub"></p>
+          </article>
+          <article class="kpi">
+            <h2 data-i18n="kpiAsp">住宅買賣合約</h2>
+            <p class="kpi-value" id="kpi-asp">—</p>
+            <p class="kpi-sub" id="kpi-asp-sub"></p>
+          </article>
+          <article class="kpi">
+            <h2 data-i18n="kpiPrimary">一手 / 二手</h2>
+            <p class="kpi-value" id="kpi-split">—</p>
+            <p class="kpi-sub" id="kpi-split-sub"></p>
+          </article>
+        </section>
+
+        <section class="panel charts" aria-label="Index charts">
+          <div class="panel-head">
+            <h2 data-i18n="chartsTitle">私人住宅指數</h2>
+            <p data-i18n="chartsLede">全港差估署按月數列（最近 60 個月）。</p>
+          </div>
+          <div class="chart-grid">
+            <div class="chart-wrap">
+              <canvas id="price-chart" height="220"></canvas>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="rent-chart" height="220"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel regions" aria-label="Regional averages">
+          <div class="panel-head">
+            <h2 data-i18n="regionTitle">分區平均售價與租金</h2>
+            <p data-i18n="regionLede">
+              差估署最新按月 A–C 類私人住宅平均數（港元／平方米）。
+            </p>
+          </div>
+          <div class="table-wrap">
+            <table id="region-table">
+              <thead>
+                <tr>
+                  <th data-i18n="colRegion">地區</th>
+                  <th data-i18n="colPriceA">售價 A</th>
+                  <th data-i18n="colPriceB">售價 B</th>
+                  <th data-i18n="colPriceC">售價 C</th>
+                  <th data-i18n="colRentA">租金 A</th>
+                  <th data-i18n="colRentB">租金 B</th>
+                  <th data-i18n="colRentC">租金 C</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -158,53 +153,13 @@
         </div>
       </div>
 
-      <div class="panel detail-notes">
-        <p id="detail-data-notes"></p>
-      </div>
-
-      <div class="panel detail-charts">
-        <div class="panel-head">
-          <h2 data-i18n="detailHistoryTitle">地區歷史</h2>
-          <p data-i18n="detailHistoryLede">
-            差估署所屬大區平均售價／租金數列，以及土地註冊處該買賣合約分區宗數。
-          </p>
-        </div>
-        <div class="chart-grid chart-grid-3">
-          <div class="chart-wrap">
-            <canvas id="detail-price-chart" height="200"></canvas>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="detail-rent-chart" height="200"></canvas>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="detail-asp-chart" height="200"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel detail-map-panel">
-        <div class="panel-head">
-          <h2 data-i18n="detailMapTitle">樓宇地圖</h2>
-          <p data-i18n="detailMapLede">
-            CSDI 地政總署建築物範圍與港鐵站標記；點選樓宇查看名稱與租金／叫價狀態。可用圖層切換底圖、美聯港鐵示意圖及學校／校網。
-          </p>
-        </div>
+      <div class="detail-map-hero">
         <div
           id="map-layer-toggles"
           class="map-layer-toggles"
           role="group"
           aria-label="Map layers"
         >
-          <span class="map-layer-group-label" data-i18n="layerBasemap">底圖</span>
-          <label class="map-layer-toggle">
-            <input type="radio" name="basemap" value="carto" checked />
-            <span data-i18n="layerCarto">CARTO</span>
-          </label>
-          <label class="map-layer-toggle">
-            <input type="radio" name="basemap" value="osm" />
-            <span data-i18n="layerOsm">OpenStreetMap</span>
-          </label>
-          <span class="map-layer-sep" aria-hidden="true"></span>
           <label class="map-layer-toggle">
             <input type="checkbox" id="toggle-midland-mtr" />
             <span data-i18n="layerMidlandMtr">美聯平均呎價</span>
@@ -262,11 +217,35 @@
         </div>
         <p id="buildings-meta" class="buildings-meta"></p>
       </div>
+
+      <div class="panel detail-notes">
+        <p id="detail-data-notes"></p>
+      </div>
+
+      <div class="panel detail-charts">
+        <div class="panel-head">
+          <h2 data-i18n="detailHistoryTitle">地區歷史</h2>
+          <p data-i18n="detailHistoryLede">
+            差估署所屬大區平均售價／租金數列，以及土地註冊處該買賣合約分區宗數。
+          </p>
+        </div>
+        <div class="chart-grid chart-grid-3">
+          <div class="chart-wrap">
+            <canvas id="detail-price-chart" height="200"></canvas>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="detail-rent-chart" height="200"></canvas>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="detail-asp-chart" height="200"></canvas>
+          </div>
+        </div>
+      </div>
     </section>
 
     <footer>
       <p data-i18n="footerSources">
-        資料來源：差餉物業估價署、土地註冊處、地政總署 CSDI、港鐵公司開放數據、教育局學校位置、小一校網界線、OpenStreetMap／CARTO，以及美聯物業港鐵示意圖。教育局並無公布學校 Band 圖層。樓宇租金／叫價盤源尚未接駁。
+        資料來源：差餉物業估價署、土地註冊處、地政總署 CSDI、港鐵公司開放數據、教育局學校位置、小一校網界線、OpenStreetMap，以及美聯物業港鐵示意圖。教育局並無公布學校 Band 圖層。樓宇租金／叫價盤源尚未接駁。
       </p>
       <p class="footer-meta">
         <span data-i18n="footerHost">Cloudflare Worker</span>

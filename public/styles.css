@@ -47,7 +47,6 @@ body {
 }
 
 .top,
-main,
 footer {
   position: relative;
   z-index: 1;
@@ -55,18 +54,25 @@ footer {
   margin-inline: auto;
 }
 
+main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: 0;
+}
+
 .top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 1.75rem 0 0.5rem;
+  padding: 1rem 0 0.35rem;
   animation: rise 0.7s ease both;
 }
 
 .brand {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-size: clamp(1.65rem, 4vw, 2.45rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.05;
@@ -98,41 +104,51 @@ footer {
   transform: translateY(-1px);
 }
 
-.hero {
-  padding: 1.5rem 0 1.75rem;
+.map-hero {
+  margin: 0 0 1.35rem;
+  padding: 0.35rem max(1rem, calc((100% - 1120px) / 2)) 0;
   animation: rise 0.8s 0.05s ease both;
 }
 
-.hero h1 {
+.map-hero-copy {
+  width: min(1120px, 100%);
+  margin: 0 auto 0.85rem;
+}
+
+.map-hero-copy h1 {
   margin: 0;
-  max-width: 16ch;
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3.8vw, 2.55rem);
-  font-weight: 500;
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  font-weight: 600;
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 .lede {
-  margin: 0.85rem 0 0;
+  margin: 0.45rem 0 0;
   max-width: 42rem;
   color: var(--ink-soft);
-  font-size: 1.02rem;
+  font-size: 0.95rem;
 }
 
 .meta {
-  margin: 0.75rem 0 0;
+  margin: 0.55rem 0 0;
   color: var(--jade-deep);
   font-size: 0.85rem;
   font-weight: 500;
 }
 
+.secondary-stack {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+  animation: rise 0.85s 0.12s ease both;
+}
+
 .kpis {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.9rem;
-  margin-bottom: 1.25rem;
-  animation: rise 0.85s 0.1s ease both;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
 }
 
 .kpi,
@@ -204,14 +220,27 @@ footer {
 
 .map-layout {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 1rem;
+  grid-template-columns: 1.45fr 0.55fr;
+  gap: 0.85rem;
   align-items: stretch;
+  width: min(1400px, 100%);
+  margin-inline: auto;
+  min-height: min(78vh, 820px);
+  padding: 0.85rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
 }
 
 .map-svg-wrap {
   position: relative;
-  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: min(74vh, 780px);
+  height: 100%;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 245, 240, 0.55)),
     radial-gradient(ellipse at 55% 45%, rgba(201, 231, 220, 0.55), transparent 65%);
@@ -221,8 +250,10 @@ footer {
 
 .map-svg-wrap svg {
   width: 100%;
-  height: auto;
+  height: 100%;
+  max-height: min(72vh, 760px);
   display: block;
+  object-fit: contain;
 }
 
 .map-empty {
@@ -305,8 +336,8 @@ footer {
 .district-list {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-  max-height: 420px;
+  gap: 0.4rem;
+  max-height: min(74vh, 780px);
   overflow: auto;
 }
 
@@ -411,9 +442,9 @@ footer a {
 .district-detail {
   position: relative;
   z-index: 1;
-  width: min(1120px, calc(100% - 2rem));
-  margin-inline: auto;
-  padding-bottom: 1rem;
+  width: 100%;
+  margin: 0;
+  padding: 0 max(1rem, calc((100% - 1120px) / 2)) 1rem;
   animation: rise 0.45s ease both;
 }
 
@@ -421,8 +452,21 @@ footer a {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: 1rem 1.25rem;
-  padding: 1.25rem 0 0.75rem;
+  gap: 0.85rem 1.1rem;
+  width: min(1120px, 100%);
+  margin-inline: auto;
+  padding: 0.85rem 0 0.55rem;
+}
+
+.detail-map-hero {
+  width: min(1400px, 100%);
+  margin: 0 auto 1.1rem;
+}
+
+.detail-notes,
+.detail-charts {
+  width: min(1120px, 100%);
+  margin-inline: auto;
 }
 
 .detail-back {
@@ -474,25 +518,34 @@ footer a {
 
 .detail-map-layout {
   display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
-  gap: 1rem;
+  grid-template-columns: 1fr min(280px, 32%);
+  gap: 0;
   align-items: stretch;
+  min-height: min(78vh, 780px);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: var(--shadow);
 }
 
 .district-leaflet {
-  min-height: 420px;
-  height: 55vh;
-  border-radius: 14px;
+  min-height: min(78vh, 780px);
+  height: min(78vh, 780px);
+  border-radius: 0;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.55);
-  border: 1px solid var(--line);
+  border: none;
 }
 
 .building-panel {
-  background: rgba(255, 255, 255, 0.62);
-  border: 1px solid var(--line);
-  border-radius: 14px;
+  background: rgba(243, 247, 244, 0.94);
+  border: none;
+  border-left: 1px solid var(--line);
+  border-radius: 0;
   padding: 1rem;
+  max-height: min(78vh, 780px);
+  overflow: auto;
 }
 
 .building-panel h3 {
@@ -823,17 +876,36 @@ footer a {
     grid-template-columns: 1fr 1fr;
   }
 
+  .map-layout {
+    min-height: 0;
+  }
+
+  .map-svg-wrap {
+    min-height: 420px;
+  }
+
+  .district-list {
+    max-height: 280px;
+  }
+
   .district-leaflet {
-    height: 360px;
+    min-height: 52vh;
+    height: 52vh;
+  }
+
+  .building-panel {
+    border-left: none;
+    border-top: 1px solid var(--line);
+    max-height: none;
+  }
+
+  .detail-map-layout {
+    min-height: 0;
   }
 }
 
 @media (max-width: 560px) {
   .kpis {
     grid-template-columns: 1fr;
-  }
-
-  .hero h1 {
-    max-width: none;
   }
 }

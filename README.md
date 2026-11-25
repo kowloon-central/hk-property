@@ -6,7 +6,8 @@ Cloudflare Worker dashboard for official Hong Kong property stats:
 - **Land Registry** monthly ASP counts by published district / region
 - **District drill-down**: CSDI LandsD building footprints + bilingual names, storeys, heights
 - **MTR stations**: static GeoJSON (CSDI `mtr_venue_polygon` centroids ⋈ MTR Corp bilingual CSV) as Leaflet markers on district drill-down
-- **Map layer toggles** (district drill-down): CARTO ↔ OpenStreetMap basemap, Midland July 2024 railway-estate MoM Δ on MTR markers (digitized JSON; PNG not overlaid), EDB primary/secondary school locations, POA primary school-net polygons
+- **Map-first UI**: overview choropleth is the primary viewport; KPIs/charts sit below. District drill-down opens a dominant Leaflet map (OSM basemap only).
+- **Map layer toggles** (district drill-down): Midland July 2024 railway-estate avg $/sq ft on MTR markers (digitized JSON; PNG not overlaid), MTR stations, EDB primary/secondary school locations, POA primary school-net polygons
 
 Bilingual UI: default **繁體中文**, toggle **English ↔ 繁體**. Preference persisted in `localStorage` (`hkp-lang`).
 
@@ -60,7 +61,7 @@ npm run dev
 | Drill-down district polygons | Derived from [hupili/geohk](https://github.com/hupili/geohk) DC land GeoJSON (census-era DC boundaries; approximate match to today’s 18 districts) |
 | Building footprints + names / storeys / heights | Lands Department **Building** layer via [CSDI](https://portal.csdi.gov.hk/) / data.gov.hk |
 | MTR station markers (bilingual + line codes) | Static `public/mtr-stations.geojson` — CSDI LandsD `mtr_venue_polygon` centroids joined to [MTR Corp](https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv) open data (interchanges aggregated; Light Rail excluded) |
-| OpenStreetMap basemap toggle | Official `tile.openstreetmap.org` tiles with OSM attribution (vs default CARTO) |
+| OpenStreetMap basemap | Official `tile.openstreetmap.org` tiles with OSM attribution (sole basemap) |
 | Midland avg $/sq ft (Jul 2024) | Digitized JSON `public/midland-mtr-jul2024.json` joined to MTR markers (labels show **平均呎價**; MoM % is secondary in popups / mild dot colour). Midland PNG is a **data reference only** — see `docs/midland-mtr-overlay.md` |
 | Primary / secondary school markers | Static `public/schools.geojson` from EDB [School Location and Information](http://www.edb.gov.hk/attachment/en/student-parents/sch-info/sch-search/sch-location-info/SCH_LOC_EDB.csv) |
 | POA primary school-net polygons | Static `public/poa-nets.geojson` from Esri China (HK) layer derived from EDB POA nets |
