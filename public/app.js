@@ -23,19 +23,29 @@
       colRentB: "Rent B",
       colRentC: "Rent C",
       footerSources:
-        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk), Land Registry monthly ASP statistics, Lands Department CSDI building footprints, MTR station points (CSDI mtr_venue_polygon centroids + MTR Corporation Limited bilingual open data), EDB school locations (data.gov.hk), Esri China (HK) POA school-net boundaries (EDB-derived), OpenStreetMap contributors, and Midland Realty July 2024 railway-estate snapshot (digitized values; Midland cited as source — PNG not used as a live overlay). EDB does not publish school Band 1/2/3 polygons — bands apply to students. Figures may be provisional. Building rent/asking listing feeds are not wired. Overview outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0). Basemap: OpenStreetMap.",
+        "Sources: Rating & Valuation Department (data.gov.hk / rvd.gov.hk), Land Registry monthly ASP statistics, Lands Department CSDI building footprints, MTR station points (CSDI mtr_venue_polygon centroids + MTR Corporation Limited bilingual open data), EDB school locations (data.gov.hk), CHSC Secondary School Profiles MOI fields (indicative Band* proxy), Esri China (HK) POA school-net boundaries (EDB-derived), OpenStreetMap contributors, and Midland Realty July 2024 railway-estate snapshot (digitized values; Midland cited as source — PNG not used as a live overlay). EDB does not publish official school Band 1/2/3 — SSPA bands apply to students; Band* here is an MOI-based open-data proxy. Figures may be provisional. Building rent/asking listing feeds are not wired. Overview outlines: SimpleMaps Hong Kong admin1 (CC-BY-4.0). Basemap: OpenStreetMap.",
       footerHost: "Cloudflare Worker",
       layerMidlandMtr: "Midland avg $/sq ft",
       layerMtrStations: "MTR stations",
       layerPrimarySchools: "Primary schools",
       layerSecondarySchools: "Secondary schools",
       layerPoaNets: "POA school nets",
+      bandFilters: "Band*",
+      bandUnbanded: "Unbanded",
       bandNote:
-        "EDB does not publish school “Band 1/2/3” layers; bands are student groups in SSPA. Shown here: official school locations and Primary One Admission net boundaries.",
+        "EDB does not publish school bands (SSPA bands pupils). Band* on secondary schools is an indicative proxy from CHSC Secondary School Profiles open data: EMI-dominant MOI → Band 1*, fine-tuned/mixed → Band 2*, CMI-dominant → Band 3*. Not an official ranking.",
       schoolPrimary: "Primary school",
       schoolSecondary: "Secondary school",
       schoolDistrict: "District",
       schoolFinance: "Finance",
+      schoolBand: "Band*",
+      schoolMoi: "MOI",
+      schoolListTitle: "Secondary schools (Band*)",
+      schoolListMeta: (n) => `${n} school${n === 1 ? "" : "s"} in view`,
+      schoolListEmpty: "No secondary schools match the Band* filters in this district.",
+      moiEmi: "EMI-leaning",
+      moiCmi: "CMI-leaning",
+      moiMixed: "Mixed / fine-tuned",
       schoolsLoaded: (n, level) =>
         `${n} ${level === "PRIMARY" ? "primary" : "secondary"} school${
           n === 1 ? "" : "s"
@@ -117,19 +127,29 @@
       colRentB: "租金 B",
       colRentC: "租金 C",
       footerSources:
-        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計、地政總署 CSDI 建築物範圍、港鐵站點（CSDI mtr_venue_polygon 形心 + 香港鐵路有限公司雙語開放數據）、教育局學校位置（data.gov.hk）、Esri China (HK) 小一入學校網界線（源自教育局）、OpenStreetMap 貢獻者，以及美聯物業 2024年7月鐵路盤快照（人手數位化數值；美聯為出處——PNG 不作產品疊圖）。教育局並無公布學校 Band 1／2／3 圖層——Band 用於學生派位。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。總覽界線：SimpleMaps 香港行政區（CC-BY-4.0）。底圖：OpenStreetMap。",
+        "資料來源：差餉物業估價署（data.gov.hk / rvd.gov.hk）、土地註冊處每月買賣合約統計、地政總署 CSDI 建築物範圍、港鐵站點（CSDI mtr_venue_polygon 形心 + 香港鐵路有限公司雙語開放數據）、教育局學校位置（data.gov.hk）、家校會《中學概覽》教學語言（Band* 參考推算）、Esri China (HK) 小一入學校網界線（源自教育局）、OpenStreetMap 貢獻者，以及美聯物業 2024年7月鐵路盤快照（人手數位化數值；美聯為出處——PNG 不作產品疊圖）。教育局並無公布官方學校 Band——派位 Band 用於學生；此處 Band* 為開放數據教學語言推算。最新數字或屬臨時數字。樓宇租金／叫價盤源尚未接駁。總覽界線：SimpleMaps 香港行政區（CC-BY-4.0）。底圖：OpenStreetMap。",
       footerHost: "Cloudflare Worker",
       layerMidlandMtr: "美聯平均呎價",
       layerMtrStations: "港鐵站",
       layerPrimarySchools: "小學",
       layerSecondarySchools: "中學",
       layerPoaNets: "小一校網",
+      bandFilters: "Band*",
+      bandUnbanded: "未評",
       bandNote:
-        "教育局並無公布學校「Band 1／2／3」圖層；Band 用於中一派位的學生組別。此處顯示官方學校位置及小一入學校網界線。",
+        "教育局不公布學校 Band（派位 Band 用於學生）。中學 Band* 按家校會《中學概覽》開放數據之中一至中三教學語言推算：英中為主→Band 1*、混合／微調→Band 2*、中中為主→Band 3*。並非官方排名。",
       schoolPrimary: "小學",
       schoolSecondary: "中學",
       schoolDistrict: "分區",
       schoolFinance: "資助種類",
+      schoolBand: "Band*",
+      schoolMoi: "教學語言",
+      schoolListTitle: "中學列表（Band*）",
+      schoolListMeta: (n) => `範圍內 ${n} 所中學`,
+      schoolListEmpty: "此區沒有符合 Band* 篩選的中學。",
+      moiEmi: "英中為主",
+      moiCmi: "中中為主",
+      moiMixed: "混合／微調",
       schoolsLoaded: (n, level) =>
         `範圍內 ${n} 所${level === "PRIMARY" ? "小學" : "中學"} · 教育局`,
       poaLoaded: (n) => `範圍內 ${n} 個小一校網`,
@@ -278,6 +298,12 @@
   let primarySchoolLayer = null;
   let secondarySchoolLayer = null;
   let poaNetsLayer = null;
+  const BAND_COLORS = {
+    1: "#1f7a5c",
+    2: "#c9832a",
+    3: "#8b3a62",
+    null: "#6b7280",
+  };
   let activeDistrictBbox = null;
   let mapLayerPrefs = {
     midland: false,
@@ -285,6 +311,10 @@
     primary: false,
     secondary: false,
     poa: false,
+    band1: true,
+    band2: true,
+    band3: true,
+    bandNull: true,
   };
 
   const OSM_BASEMAP = {
@@ -330,6 +360,11 @@
       renderDetailChrome(activeDistrict);
       if (market) renderDetailCharts(activeDistrict, market);
       refreshBuildingPanelLabels();
+      if (leafletMap && activeDistrictBbox) {
+        if (mapLayerPrefs.secondary) addSchoolLayer("SECONDARY", activeDistrictBbox);
+        else renderSchoolList(null);
+        if (mapLayerPrefs.primary) addSchoolLayer("PRIMARY", activeDistrictBbox);
+      }
     }
   }
 
@@ -573,6 +608,7 @@
       detailAspChart = null;
     }
     clearBuildingPanel();
+    renderSchoolList(null);
   }
 
   function renderDetailChrome(dcName) {
@@ -1022,11 +1058,39 @@
     return features.length;
   }
 
+  function bandKey(band) {
+    return band === 1 || band === 2 || band === 3 ? band : null;
+  }
+
+  function bandAllowed(band) {
+    const key = bandKey(band);
+    if (key === 1) return mapLayerPrefs.band1;
+    if (key === 2) return mapLayerPrefs.band2;
+    if (key === 3) return mapLayerPrefs.band3;
+    return mapLayerPrefs.bandNull;
+  }
+
+  function bandLabel(band) {
+    const key = bandKey(band);
+    if (key) return `Band ${key}*`;
+    return t("bandUnbanded");
+  }
+
+  function moiLabel(moi) {
+    if (moi === "EMI") return t("moiEmi");
+    if (moi === "CMI") return t("moiCmi");
+    if (moi === "MIXED") return t("moiMixed");
+    return "—";
+  }
+
+  function schoolDisplayName(props) {
+    return locale === "zh"
+      ? props.nameZh || props.nameEn
+      : props.nameEn || props.nameZh;
+  }
+
   function schoolPopupHtml(props) {
-    const name =
-      locale === "zh"
-        ? props.nameZh || props.nameEn
-        : props.nameEn || props.nameZh;
+    const name = schoolDisplayName(props);
     const alt =
       locale === "zh"
         ? props.nameEn && props.nameEn !== props.nameZh
@@ -1045,6 +1109,16 @@
       locale === "zh"
         ? props.financeZh || props.financeEn
         : props.financeEn || props.financeZh;
+    const bandRow =
+      props.level === "SECONDARY"
+        ? `<div class="school-popup-meta">${t("schoolBand")}: <span class="band-chip band-${
+            bandKey(props.band) ?? "null"
+          }">${bandLabel(props.band)}</span>${
+            props.moi
+              ? ` · ${t("schoolMoi")}: ${moiLabel(props.moi)}`
+              : ""
+          }</div>`
+        : "";
     return `<div class="school-popup">
       <div class="school-popup-kicker">${levelLabel}</div>
       <strong>${name || "—"}</strong>
@@ -1052,7 +1126,54 @@
       <div class="school-popup-meta">${t("schoolDistrict")}: ${
         district || "—"
       } · ${t("schoolFinance")}: ${finance || "—"}</div>
+      ${bandRow}
     </div>`;
+  }
+
+  function secondaryFeaturesInView(bbox) {
+    if (!schoolsGeo || !bbox) return [];
+    return (schoolsGeo.features || []).filter((f) => {
+      if (f.properties?.level !== "SECONDARY") return false;
+      if (!bandAllowed(f.properties.band)) return false;
+      const c = f.geometry?.coordinates;
+      return Array.isArray(c) && pointInBbox(c, bbox);
+    });
+  }
+
+  function renderSchoolList(bbox) {
+    const block = $("#school-list-block");
+    const list = $("#school-list");
+    const meta = $("#school-list-meta");
+    if (!block || !list || !meta) return;
+    if (!mapLayerPrefs.secondary || !bbox) {
+      block.hidden = true;
+      list.innerHTML = "";
+      meta.textContent = "";
+      return;
+    }
+    const features = secondaryFeaturesInView(bbox).slice().sort((a, b) => {
+      const ba = bandKey(a.properties.band) ?? 9;
+      const bb = bandKey(b.properties.band) ?? 9;
+      if (ba !== bb) return ba - bb;
+      const na = schoolDisplayName(a.properties) || "";
+      const nb = schoolDisplayName(b.properties) || "";
+      return na.localeCompare(nb, locale === "zh" ? "zh-Hant" : "en");
+    });
+    block.hidden = false;
+    meta.textContent = features.length
+      ? t("schoolListMeta")(features.length)
+      : t("schoolListEmpty");
+    list.innerHTML = features
+      .map((f) => {
+        const p = f.properties || {};
+        const key = bandKey(p.band) ?? "null";
+        const [lon, lat] = f.geometry.coordinates;
+        return `<li class="school-list-item" data-band="${key}" data-lon="${lon}" data-lat="${lat}">
+          <span class="band-chip band-${key}">${bandLabel(p.band)}</span>
+          <span class="school-list-name">${schoolDisplayName(p) || "—"}</span>
+        </li>`;
+      })
+      .join("");
   }
 
   function addSchoolLayer(level, bbox) {
@@ -1065,13 +1186,20 @@
       else secondarySchoolLayer = null;
     }
     const enabled = isPrimary ? mapLayerPrefs.primary : mapLayerPrefs.secondary;
-    if (!enabled) return 0;
+    if (!enabled) {
+      if (!isPrimary) renderSchoolList(null);
+      return 0;
+    }
 
     const features = (schoolsGeo.features || []).filter((f) => {
       if (f.properties?.level !== level) return false;
+      if (!isPrimary && !bandAllowed(f.properties.band)) return false;
       const c = f.geometry?.coordinates;
       return Array.isArray(c) && pointInBbox(c, bbox);
     });
+
+    if (!isPrimary) renderSchoolList(bbox);
+
     if (!features.length) return 0;
 
     if (!leafletMap.getPane("schoolPane")) {
@@ -1083,22 +1211,26 @@
       { type: "FeatureCollection", features },
       {
         pane: "schoolPane",
-        pointToLayer(_feature, latlng) {
+        pointToLayer(feature, latlng) {
+          const band = isPrimary ? null : bandKey(feature.properties?.band);
+          const fill = isPrimary
+            ? "#2f6fed"
+            : BAND_COLORS[band ?? "null"] || BAND_COLORS.null;
           return L.circleMarker(latlng, {
-            radius: 5,
+            radius: isPrimary ? 5 : 6,
             color: "#0c1f24",
             weight: 1,
-            fillColor: isPrimary ? "#2f6fed" : "#8b3a62",
-            fillOpacity: 0.9,
+            fillColor: fill,
+            fillOpacity: 0.92,
             className: isPrimary
               ? "school-marker-primary"
-              : "school-marker-secondary",
+              : `school-marker-secondary band-${band ?? "null"}`,
           });
         },
         onEachFeature(feature, lyr) {
           lyr.bindPopup(schoolPopupHtml(feature.properties || {}), {
             className: "school-popup-wrap",
-            maxWidth: 280,
+            maxWidth: 300,
           });
         },
       },
@@ -1200,12 +1332,21 @@
     const primary = $("#toggle-primary-schools");
     const secondary = $("#toggle-secondary-schools");
     const poa = $("#toggle-poa-nets");
+    const b1 = $("#toggle-band-1");
+    const b2 = $("#toggle-band-2");
+    const b3 = $("#toggle-band-3");
+    const bNull = $("#toggle-band-null");
     if (midland) midland.checked = mapLayerPrefs.midland;
     if (mtr) mtr.checked = mapLayerPrefs.mtr;
     if (primary) primary.checked = mapLayerPrefs.primary;
     if (secondary) secondary.checked = mapLayerPrefs.secondary;
     if (poa) poa.checked = mapLayerPrefs.poa;
+    if (b1) b1.checked = mapLayerPrefs.band1;
+    if (b2) b2.checked = mapLayerPrefs.band2;
+    if (b3) b3.checked = mapLayerPrefs.band3;
+    if (bNull) bNull.checked = mapLayerPrefs.bandNull;
   }
+
 
   async function loadDistrictMap(dcName) {
     const meta = districtsMeta?.districts?.[dcName];
@@ -1645,6 +1786,50 @@
     mapLayerPrefs.poa = Boolean(evt.target.checked);
     if (!leafletMap || !activeDistrictBbox) return;
     addPoaNets(activeDistrictBbox);
+  });
+
+  function onBandFilterChange() {
+    if (!leafletMap || !activeDistrictBbox) return;
+    addSchoolLayer("SECONDARY", activeDistrictBbox);
+  }
+  $("#toggle-band-1")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.band1 = Boolean(evt.target.checked);
+    onBandFilterChange();
+  });
+  $("#toggle-band-2")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.band2 = Boolean(evt.target.checked);
+    onBandFilterChange();
+  });
+  $("#toggle-band-3")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.band3 = Boolean(evt.target.checked);
+    onBandFilterChange();
+  });
+  $("#toggle-band-null")?.addEventListener("change", (evt) => {
+    mapLayerPrefs.bandNull = Boolean(evt.target.checked);
+    onBandFilterChange();
+  });
+
+  $("#school-list")?.addEventListener("click", (evt) => {
+    const item = evt.target.closest(".school-list-item");
+    if (!item || !leafletMap) return;
+    const lon = Number(item.dataset.lon);
+    const lat = Number(item.dataset.lat);
+    if (!Number.isFinite(lon) || !Number.isFinite(lat)) return;
+    leafletMap.setView([lat, lon], Math.max(leafletMap.getZoom(), 16), {
+      animate: true,
+    });
+    if (secondarySchoolLayer) {
+      secondarySchoolLayer.eachLayer((lyr) => {
+        const ll = lyr.getLatLng?.();
+        if (
+          ll &&
+          Math.abs(ll.lat - lat) < 1e-6 &&
+          Math.abs(ll.lng - lon) < 1e-6
+        ) {
+          lyr.openPopup();
+        }
+      });
+    }
   });
 
   applyI18n();

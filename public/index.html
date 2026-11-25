@@ -181,13 +181,36 @@
             <input type="checkbox" id="toggle-poa-nets" />
             <span data-i18n="layerPoaNets">小一校網</span>
           </label>
+          <span class="map-layer-sep" aria-hidden="true"></span>
+          <span class="map-layer-group-label" data-i18n="bandFilters">Band*</span>
+          <label class="map-layer-toggle band-filter band-1">
+            <input type="checkbox" id="toggle-band-1" checked />
+            <span>Band 1*</span>
+          </label>
+          <label class="map-layer-toggle band-filter band-2">
+            <input type="checkbox" id="toggle-band-2" checked />
+            <span>Band 2*</span>
+          </label>
+          <label class="map-layer-toggle band-filter band-3">
+            <input type="checkbox" id="toggle-band-3" checked />
+            <span>Band 3*</span>
+          </label>
+          <label class="map-layer-toggle band-filter band-null">
+            <input type="checkbox" id="toggle-band-null" checked />
+            <span data-i18n="bandUnbanded">未評</span>
+          </label>
         </div>
         <p id="map-band-note" class="map-band-note" data-i18n="bandNote">
-          教育局並無公布學校「Band 1／2／3」圖層；Band 用於中一派位的學生組別。此處顯示官方學校位置及小一入學校網界線。
+          教育局不公布學校 Band。Band* 為家校會《中學概覽》中一至中三教學語言（英中／混合／中中）推算的參考組別，並非官方排名；無概覽資料的中學列「未評」。
         </p>
         <div class="detail-map-layout">
           <div id="district-leaflet" class="district-leaflet"></div>
           <aside id="building-panel" class="building-panel">
+            <div id="school-list-block" class="school-list-block" hidden>
+              <h3 data-i18n="schoolListTitle">中學列表（Band*）</h3>
+              <p id="school-list-meta" class="school-list-meta"></p>
+              <ul id="school-list" class="school-list"></ul>
+            </div>
             <h3 data-i18n="buildingPick">選擇樓宇</h3>
             <p id="building-name" class="building-name">—</p>
             <dl class="building-attrs">
@@ -245,7 +268,7 @@
 
     <footer>
       <p data-i18n="footerSources">
-        資料來源：差餉物業估價署、土地註冊處、地政總署 CSDI、港鐵公司開放數據、教育局學校位置、小一校網界線、OpenStreetMap，以及美聯物業港鐵示意圖。教育局並無公布學校 Band 圖層。樓宇租金／叫價盤源尚未接駁。
+        資料來源：差餉物業估價署、土地註冊處、地政總署 CSDI、港鐵公司開放數據、教育局學校位置、家校會《中學概覽》教學語言（Band* 參考推算）、小一校網界線、OpenStreetMap，以及美聯物業港鐵示意圖。教育局並無公布官方學校 Band。樓宇租金／叫價盤源尚未接駁。
       </p>
       <p class="footer-meta">
         <span data-i18n="footerHost">Cloudflare Worker</span>

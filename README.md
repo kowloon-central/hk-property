@@ -7,7 +7,7 @@ Cloudflare Worker dashboard for official Hong Kong property stats:
 - **District drill-down**: CSDI LandsD building footprints + bilingual names, storeys, heights
 - **MTR stations**: static GeoJSON (CSDI `mtr_venue_polygon` centroids ⋈ MTR Corp bilingual CSV) as Leaflet markers on district drill-down
 - **Map-first UI**: overview choropleth is the primary viewport; KPIs/charts sit below. District drill-down opens a dominant Leaflet map (OSM basemap only).
-- **Map layer toggles** (district drill-down): Midland July 2024 railway-estate avg $/sq ft on MTR markers (digitized JSON; PNG not overlaid), MTR stations, EDB primary/secondary school locations, POA primary school-net polygons
+- **Map layer toggles** (district drill-down): Midland July 2024 railway-estate avg $/sq ft on MTR markers (digitized JSON; PNG not overlaid), MTR stations, EDB primary/secondary school locations with **Band 1\*/2\*/3\*** filters (CHSC MOI proxy), POA primary school-net polygons, and a secondary-school list panel
 
 Bilingual UI: default **繁體中文**, toggle **English ↔ 繁體**. Preference persisted in `localStorage` (`hkp-lang`).
 
@@ -64,17 +64,18 @@ npm run dev
 | OpenStreetMap basemap | Official `tile.openstreetmap.org` tiles with OSM attribution (sole basemap) |
 | Midland avg $/sq ft (Jul 2024) | Digitized JSON `public/midland-mtr-jul2024.json` joined to MTR markers (labels show **平均呎價**; MoM % is secondary in popups / mild dot colour). Midland PNG is a **data reference only** — see `docs/midland-mtr-overlay.md` |
 | Primary / secondary school markers | Static `public/schools.geojson` from EDB [School Location and Information](http://www.edb.gov.hk/attachment/en/student-parents/sch-info/sch-search/sch-location-info/SCH_LOC_EDB.csv) |
+| Indicative secondary **Band\*** | CHSC [Secondary School Profiles 2025/26](https://www.chsc.hk/datagovhk/ssp_2025_2026_en.csv) MOI fields → EMI / mixed / CMI proxy (see `docs/school-banding.md`) |
 | POA primary school-net polygons | Static `public/poa-nets.geojson` from Esri China (HK) layer derived from EDB POA nets |
 
 Refresh snapshots:
 
 ```bash
 npm run build:mtr
-npm run build:schools   # needs tmp/SCH_LOC_EDB.csv
+npm run build:schools   # needs tmp/SCH_LOC_EDB.csv + tmp/ssp_2025_2026_{en,tc}.csv
 npm run build:poa       # needs tmp/poa-nets.geojson from Esri FeatureServer
 ```
 
-**Band 1 / 2 / 3 limitation:** EDB does **not** publish school Band polygons. “Band” in SSPA refers to **student** allocation groups (territory / net thirds), not official school rankings. The UI therefore shows school locations + POA nets and states this clearly (EN / 繁體).
+**Band 1 / 2 / 3:** EDB does **not** publish school Band polygons (SSPA bands **students**). This site shows an honest **Band\*** proxy from open CHSC junior-secondary medium-of-instruction data (EMI → 1\*, mixed → 2\*, CMI → 3\*), with map filters, colour labels, and a district school list. Details: [`docs/school-banding.md`](docs/school-banding.md).
 
 ### Placeholder (intentionally not scraped)
 
@@ -83,7 +84,7 @@ npm run build:poa       # needs tmp/poa-nets.geojson from Esri FeatureServer
 | Per-building **rent listing** | UI shows “not wired yet” — no Midland / Centaline / 28Hse scrape |
 | Per-building **asking price** | Same |
 | Exact 18-way ASP for Island / Kowloon DCs | Land Registry publishes Island & Kowloon aggregates only; Island/Kowloon DCs share that ASP series |
-| Official school **Band 1/2/3** polygons | Not openly available from EDB |
+| Official school **Band 1/2/3** polygons | Not published by EDB — UI uses CHSC MOI Band\* proxy instead (not Midland scrape) |
 
 ## Data sources (URLs)
 
@@ -99,6 +100,7 @@ npm run build:poa       # needs tmp/poa-nets.geojson from Esri FeatureServer
 | CSDI MTR venue polygons (WFS) | `https://mapapi.hkmapservice.gov.hk/ogc/wfs/indoor/mtr_venue_polygon` |
 | MTR lines & stations CSV | https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv |
 | EDB school locations | http://www.edb.gov.hk/attachment/en/student-parents/sch-info/sch-search/sch-location-info/SCH_LOC_EDB.csv |
+| CHSC Secondary School Profiles (MOI → Band*) | https://www.chsc.hk/datagovhk/ssp_2025_2026_en.csv |
 | EDB POA school-net list | https://www.edb.gov.hk/attachment/datagovhk/POA_SchoolNet_EN.csv |
 | Midland railway-estate chart (digitized reference) | https://res-cms.midland.com.hk/property-news/wp-content/uploads/2024/08/P130824-MTR.png |
 
